@@ -1,0 +1,637 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [57: 58] 
+	subgraph cluster_31428784 { 
+		label = "Block #1"
+		19482850[label="shortNumber := @parameter0: short",shape=Mdiamond,color=grey50,fillcolor=white]
+		33079012[label="$stack1 = newarray (java.lang.Object)[1]"]
+		25685396[label="$stack2 = staticinvoke &lt;java.lang.Short: java.lang.Short valueOf(short)&gt;(shortNumber)"]
+		28074779[label="$stack1[0] = $stack2"]
+		8892281[label="$stack3 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02d&quot;, $stack1)"]
+		21614240[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack3)"]
+		19448146[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		2734911 -> 19482850 -> 33079012 -> 25685396 -> 28074779 -> 8892281 -> 21614240 -> 19448146
+	}
+
+
+//  lines [42: 43] 
+	subgraph cluster_13329486 { 
+		label = "Block #1"
+		12186738[label="longNumber := @parameter0: long",shape=Mdiamond,color=grey50,fillcolor=white]
+		26817333[label="$stack2 = newarray (java.lang.Object)[1]"]
+		26379843[label="$stack3 = staticinvoke &lt;java.lang.Long: java.lang.Long valueOf(long)&gt;(longNumber)"]
+		2468239[label="$stack2[0] = $stack3"]
+		19597309[label="$stack4 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02d&quot;, $stack2)"]
+		12565638[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack4)"]
+		16954289[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		19482850 -> 12186738 -> 26817333 -> 26379843 -> 2468239 -> 19597309 -> 12565638 -> 16954289
+	}
+
+
+//  lines [70: 70] 
+	subgraph cluster_20846333 { 
+		label = "Block #1"
+		9786774[label="$stack0 = staticinvoke &lt;java.sql.DriverManager: java.sql.Connection getConnection(java.lang.String,java.lang.String,java.lang.String)&gt;(&quot;&quot;, &quot;&quot;, &quot;&quot;)",shape=Mdiamond,color=grey50,fillcolor=white]
+		11209723[label="return $stack0",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		12186738 -> 9786774 -> 11209723
+	}
+
+
+//  lines [100: 100] 
+	subgraph cluster_22429093 { 
+		label = "Block #1"
+		30989146[label="$stack0 = new java.util.Random",shape=Mdiamond,color=grey50,fillcolor=white]
+		15105546[label="specialinvoke $stack0.&lt;java.util.Random: void &lt;init&gt;()&gt;()"]
+		26492273[label="$stack1 = virtualinvoke $stack0.&lt;java.util.Random: boolean nextBoolean()&gt;()"]
+		4455950[label="return $stack1",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		9786774 -> 30989146 -> 15105546 -> 26492273 -> 4455950
+	}
+
+
+//  lines [32: 33] 
+	subgraph cluster_28365805 { 
+		label = "Block #1"
+		31556208[label="line := @parameter0: java.lang.String",shape=Mdiamond,color=grey50,fillcolor=white]
+		8136973[label="$stack1 = &lt;java.lang.System: java.io.PrintStream out&gt;"]
+		17037394[label="virtualinvoke $stack1.&lt;java.io.PrintStream: void println(java.lang.String)&gt;(line)"]
+		26531417[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		10292125 -> 31556208 -> 8136973 -> 17037394 -> 26531417
+	}
+
+
+//  lines [47: 48] 
+	subgraph cluster_26173282 { 
+		label = "Block #1"
+		27365147[label="doubleNumber := @parameter0: double",shape=Mdiamond,color=grey50,fillcolor=white]
+		30897183[label="$stack2 = newarray (java.lang.Object)[1]"]
+		23522272[label="$stack3 = staticinvoke &lt;java.lang.Double: java.lang.Double valueOf(double)&gt;(doubleNumber)"]
+		16208003[label="$stack2[0] = $stack3"]
+		29011566[label="$stack4 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02f&quot;, $stack2)"]
+		20420434[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack4)"]
+		26934279[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		31556208 -> 27365147 -> 30897183 -> 23522272 -> 16208003 -> 29011566 -> 20420434 -> 26934279
+	}
+
+
+//  lines [21: 30] 
+	subgraph cluster_29052980 { 
+		label = "Block #1"
+		3454540[label="args := @parameter0: java.lang.String[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		16858230[label="$stack5 = staticinvoke &lt;java.lang.Thread: java.lang.Thread currentThread()&gt;()"]
+		33242539[label="stackTraceElements = virtualinvoke $stack5.&lt;java.lang.Thread: java.lang.StackTraceElement[] getStackTrace()&gt;()"]
+		19277309[label="$stack6 = lengthof stackTraceElements"]
+		28989463[label="$stack7 = $stack6 - 1"]
+		11564379[label="$stack8 = stackTraceElements[$stack7]"]
+		7619271[label="myClassName = virtualinvoke $stack8.&lt;java.lang.StackTraceElement: java.lang.String getClassName()&gt;()"]
+		31745340[label="myClass = staticinvoke &lt;java.lang.Class: java.lang.Class forName(java.lang.String)&gt;(myClassName)"]
+		21616440[label="$stack9 = virtualinvoke myClass.&lt;java.lang.Class: java.lang.Object newInstance()&gt;()"]
+		31629017[label="myObject = (testcasesupport.AbstractTestCaseBase) $stack9"]
+		9269386[label="virtualinvoke myObject.&lt;testcasesupport.AbstractTestCaseBase: void runTest(java.lang.String)&gt;(myClassName)"]
+		17559707[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		3454540 -> 16858230 -> 33242539 -> 19277309 -> 28989463 -> 11564379 -> 7619271 -> 31745340 -> 21616440 -> 31629017 -> 9269386 -> 17559707
+	}
+
+
+//  lines [52: 53] 
+	subgraph cluster_8582895 { 
+		label = "Block #1"
+		22998845[label="floatNumber := @parameter0: float",shape=Mdiamond,color=grey50,fillcolor=white]
+		6074679[label="$stack1 = newarray (java.lang.Object)[1]"]
+		8631303[label="$stack2 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;(floatNumber)"]
+		23211999[label="$stack1[0] = $stack2"]
+		21699586[label="$stack3 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02f&quot;, $stack1)"]
+		9690517[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack3)"]
+		6627280[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		27365147 -> 22998845 -> 6074679 -> 8631303 -> 23211999 -> 21699586 -> 9690517 -> 6627280
+	}
+
+
+//  lines [95: 95] 
+	subgraph cluster_15088350 { 
+		label = "Block #1"
+		30691851[label="return 0",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+
+//  lines [143: 151] 
+	subgraph cluster_33128902 { 
+		label = "Block #1"
+		26141918[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		6979925[label="dataCopy = &quot;foo&quot;"]
+		2204753[label="data#1 = &quot;foo&quot;"]
+		18814042[label="$stack5 = staticinvoke &lt;java.lang.System: java.lang.String getProperty(java.lang.String)&gt;(&quot;os.name&quot;)"]
+		3476288[label="$stack6 = virtualinvoke $stack5.&lt;java.lang.String: java.lang.String toLowerCase()&gt;()"]
+		27306621[label="$stack7 = virtualinvoke $stack6.&lt;java.lang.String: int indexOf(java.lang.String)&gt;(&quot;win&quot;)"]
+		17396543[label="if $stack7 &lt; 0"]
+
+		18970163 -> 26141918 -> 6979925 -> 2204753 -> 18814042 -> 3476288 -> 27306621 -> 17396543
+	}
+	17396543:s -> 25125055:n[label="false"]
+	17396543:s -> 14648372:n[label="true"]
+
+//  lines [159: 159] 
+	subgraph cluster_11314315 { 
+		label = "Block #2"
+		14648372[label="osCommand = &quot;/bin/ls &quot;"]
+	}
+	14648372:s -> 8928021:n
+
+//  lines [154: 154] 
+	subgraph cluster_22043464 { 
+		label = "Block #3"
+		25125055[label="osCommand = &quot;c:\\WINDOWS\\SYSTEM32\\cmd.exe /c dir &quot;"]
+		1704966[label="goto"]
+
+		25125055 -> 1704966
+	}
+	1704966:s -> 8928021:n
+
+//  lines [163: 167] 
+	subgraph cluster_26935520 { 
+		label = "Block #4"
+		8928021[label="$stack12 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()"]
+		737394[label="$stack8 = new java.lang.StringBuilder"]
+		10248577[label="specialinvoke $stack8.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		8826818[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(osCommand)"]
+		18173133[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;foo&quot;)"]
+		20359692[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		23338297[label="process = virtualinvoke $stack12.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack11)"]
+		31188836[label="virtualinvoke process.&lt;java.lang.Process: int waitFor()&gt;()"]
+		3819131[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		8928021 -> 737394 -> 10248577 -> 8826818 -> 18173133 -> 20359692 -> 23338297 -> 31188836 -> 3819131
+	}
+
+
+//  lines [23: 86] 
+	subgraph cluster_18999315 { 
+		label = "Block #1"
+		12099672[label="$stack0 = staticinvoke &lt;java.util.logging.Logger: java.util.logging.Logger getLogger(java.lang.String)&gt;(&quot;testcases&quot;)",shape=Mdiamond,color=grey50,fillcolor=white]
+		12313413[label="&lt;testcasesupport.IO: java.util.logging.Logger logger&gt; = $stack0"]
+		2779060[label="&lt;testcasesupport.IO: boolean staticTrue&gt; = 1"]
+		17319689[label="&lt;testcasesupport.IO: boolean staticFalse&gt; = 0"]
+		31596604[label="&lt;testcasesupport.IO: int staticFive&gt; = 5"]
+		20446607[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		30691851 -> 12099672 -> 12313413 -> 2779060 -> 17319689 -> 31596604 -> 20446607
+	}
+
+
+//  lines [13: 13] 
+	subgraph cluster_11145949 { 
+		label = "Block #1"
+		17987266[label="this := @this: testcasesupport.IO",shape=Mdiamond,color=grey50,fillcolor=white]
+		30910229[label="specialinvoke this.&lt;java.lang.Object: void &lt;init&gt;()&gt;()"]
+		29095294[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		12099672 -> 17987266 -> 30910229 -> 29095294
+	}
+
+
+//  lines [37: 38] 
+	subgraph cluster_18620064 { 
+		label = "Block #1"
+		13483509[label="intNumber := @parameter0: int",shape=Mdiamond,color=grey50,fillcolor=white]
+		9687445[label="$stack1 = newarray (java.lang.Object)[1]"]
+		7842689[label="$stack2 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;(intNumber)"]
+		3327275[label="$stack1[0] = $stack2"]
+		25288738[label="$stack3 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02d&quot;, $stack1)"]
+		25041676[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack3)"]
+		26174884[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		17987266 -> 13483509 -> 9687445 -> 7842689 -> 3327275 -> 25288738 -> 25041676 -> 26174884
+	}
+
+
+//  lines [18: 18] 
+	subgraph cluster_10761416 { 
+		label = "Block #1"
+		3720603[label="this := @this: testcasesupport.AbstractTestCase",shape=Mdiamond,color=grey50,fillcolor=white]
+		29112824[label="className := @parameter0: java.lang.String"]
+		31907868[label="$stack8 = new java.lang.StringBuilder"]
+		8441331[label="specialinvoke $stack8.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		13142578[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;Starting tests for Class &quot;)"]
+		16329069[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(className)"]
+		912458[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		12660881[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack11)"]
+
+		3720603 -> 29112824 -> 31907868 -> 8441331 -> 13142578 -> 16329069 -> 912458 -> 12660881
+	}
+	12660881:s -> 10904818:n
+
+//  lines [22: 24] 
+	subgraph cluster_21885266 { 
+		label = "Block #2"
+		10904818[label="virtualinvoke this.&lt;testcasesupport.AbstractTestCase: void good()&gt;()"]
+		16843650[label="$stack12 = new java.lang.StringBuilder"]
+		1341894[label="specialinvoke $stack12.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		18085308[label="$stack13 = virtualinvoke $stack12.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;Completed good() for Class &quot;)"]
+		4627528[label="$stack14 = virtualinvoke $stack13.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(className)"]
+		15081446[label="$stack15 = virtualinvoke $stack14.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		10292125[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack15)"]
+
+		10904818 -> 16843650 -> 1341894 -> 18085308 -> 4627528 -> 15081446 -> 10292125
+	}
+	10292125:s -> 4380597:n
+	//exceptional edges 
+	10292125:e -> 26021986:n [label="	java.lang.Throwable"color=red,ltail="cluster_21885266"]
+
+//  lines [40: 40] 
+	subgraph cluster_15130593 { 
+		label = "Block #3"
+		4380597[label="goto"]
+	}
+	4380597:s -> 6793289:n
+
+//  lines [44: 46] 
+	subgraph cluster_15524733 { 
+		label = "Block #4"
+		6793289[label="virtualinvoke this.&lt;testcasesupport.AbstractTestCase: void bad()&gt;()"]
+		14570065[label="$stack16 = new java.lang.StringBuilder"]
+		27025178[label="specialinvoke $stack16.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		11550799[label="$stack17 = virtualinvoke $stack16.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;Completed bad() for Class &quot;)"]
+		28943922[label="$stack18 = virtualinvoke $stack17.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(className)"]
+		4478505[label="$stack19 = virtualinvoke $stack18.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		31231691[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack19)"]
+
+		6793289 -> 14570065 -> 27025178 -> 11550799 -> 28943922 -> 4478505 -> 31231691
+	}
+	31231691:s -> 165254:n
+	//exceptional edges 
+	31231691:e -> 12057684:n [label="	java.lang.Throwable"color=red,ltail="cluster_15524733"]
+
+//  lines [62: 62] 
+	subgraph cluster_25217911 { 
+		label = "Block #5"
+		165254[label="goto"]
+	}
+	165254:s -> 33156300:n
+
+//  lines [63: 63] 
+	subgraph cluster_11652243 { 
+		label = "Block #6"
+		33156300[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+
+//  lines [27: 28] 
+	subgraph cluster_8056047 { 
+		label = "Block #1"
+		33316792[label="str := @parameter0: java.lang.String",shape=Mdiamond,color=grey50,fillcolor=white]
+		3224332[label="$stack1 = &lt;java.lang.System: java.io.PrintStream out&gt;"]
+		16333464[label="virtualinvoke $stack1.&lt;java.io.PrintStream: void print(java.lang.String)&gt;(str)"]
+		8350604[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		13483509 -> 33316792 -> 3224332 -> 16333464 -> 8350604
+	}
+
+
+//  lines [39: 45] 
+	subgraph cluster_1542774 { 
+		label = "Block #1"
+		13880498[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		9915973[label="data#0 = &quot;&quot;"]
+		21909521[label="socket#0 = null"]
+		1271627[label="readerBuffered#0 = null"]
+		1755304[label="readerInputStream = null"]
+
+		13880498 -> 9915973 -> 21909521 -> 1271627 -> 1755304
+	}
+	1755304:s -> 2734911:n
+
+//  lines [50: 54] 
+	subgraph cluster_20307623 { 
+		label = "Block #2"
+		2734911[label="$stack9 = new java.net.Socket"]
+		15900943[label="specialinvoke $stack9.&lt;java.net.Socket: void &lt;init&gt;(java.lang.String,int)&gt;(&quot;host.example.org&quot;, 39544)"]
+		28529518[label="socket#0 = $stack9"]
+		987179[label="$stack11 = new java.io.InputStreamReader"]
+		24338537[label="$stack10 = virtualinvoke $stack9.&lt;java.net.Socket: java.io.InputStream getInputStream()&gt;()"]
+		6444850[label="#l1 = (java.io.InputStreamReader) $stack11"]
+
+		2734911 -> 15900943 -> 28529518 -> 987179 -> 24338537 -> 6444850
+	}
+	6444850:s -> 2853650:n
+	//exceptional edges 
+	6444850:e -> 17769585:n [label="	java.io.IOException"color=red,ltail="cluster_20307623"]
+	6444850:e -> 18097908:n [label="	java.lang.Throwable"color=red,ltail="cluster_20307623"]
+
+//  lines [54: 55] 
+	subgraph cluster_25510622 { 
+		label = "Block #3"
+		2853650[label="specialinvoke #l1.&lt;java.io.InputStreamReader: void &lt;init&gt;(java.io.InputStream,java.lang.String)&gt;($stack10, &quot;UTF-8&quot;)"]
+		11690234[label="readerInputStream = (java.io.InputStreamReader) $stack11"]
+		2372048[label="$stack12 = new java.io.BufferedReader"]
+		3274186[label="#l0 = (java.io.Reader) $stack11"]
+
+		2853650 -> 11690234 -> 2372048 -> 3274186
+	}
+	3274186:s -> 615301:n
+
+//  lines [55: 58] 
+	subgraph cluster_13804063 { 
+		label = "Block #4"
+		615301[label="specialinvoke $stack12.&lt;java.io.BufferedReader: void &lt;init&gt;(java.io.Reader)&gt;(#l0)"]
+		12290035[label="readerBuffered#0 = $stack12"]
+		1248325[label="data#0 = virtualinvoke $stack12.&lt;java.io.BufferedReader: java.lang.String readLine()&gt;()"]
+
+		615301 -> 12290035 -> 1248325
+	}
+	1248325:s -> 16058638:n
+
+//  lines [69: 69] 
+	subgraph cluster_20220765 { 
+		label = "Block #5"
+		16058638[label="if $stack12 == null"]
+	}
+	16058638:s -> 1720339:n[label="false"]
+	16058638:s -> 27888230:n[label="true"]
+	//exceptional edges 
+	16058638:e -> 19107778:n [label="	java.io.IOException"color=red,ltail="cluster_20220765"]
+
+//  lines [71: 71] 
+	subgraph cluster_30323167 { 
+		label = "Block #6"
+		1720339[label="virtualinvoke $stack12.&lt;java.io.BufferedReader: void close()&gt;()"]
+	}
+	1720339:s -> 27888230:n
+	//exceptional edges 
+	1720339:e -> 19107778:n [label="	java.io.IOException"color=red,ltail="cluster_30323167"]
+
+//  lines [77: 77] 
+	subgraph cluster_30005474 { 
+		label = "Block #7"
+		27888230[label="goto"]
+	}
+	27888230:s -> 11939193:n
+
+//  lines [81: 81] 
+	subgraph cluster_21645255 { 
+		label = "Block #8"
+		11939193[label="if $stack11 == null"]
+	}
+	11939193:s -> 31242245:n[label="false"]
+	11939193:s -> 2143546:n[label="true"]
+	//exceptional edges 
+	11939193:e -> 24051796:n [label="	java.io.IOException"color=red,ltail="cluster_21645255"]
+
+//  lines [83: 83] 
+	subgraph cluster_4544584 { 
+		label = "Block #9"
+		31242245[label="#l4 = (java.io.InputStreamReader) $stack11"]
+	}
+	31242245:s -> 31100357:n
+
+//  lines [83: 83] 
+	subgraph cluster_20238865 { 
+		label = "Block #10"
+		31100357[label="virtualinvoke #l4.&lt;java.io.InputStreamReader: void close()&gt;()"]
+	}
+	31100357:s -> 2143546:n
+	//exceptional edges 
+	31100357:e -> 24051796:n [label="	java.io.IOException"color=red,ltail="cluster_20238865"]
+
+//  lines [89: 89] 
+	subgraph cluster_29423366 { 
+		label = "Block #11"
+		2143546[label="goto"]
+	}
+	2143546:s -> 32409364:n
+
+//  lines [94: 94] 
+	subgraph cluster_31600929 { 
+		label = "Block #12"
+		32409364[label="if $stack9 == null"]
+	}
+	32409364:s -> 27398264:n[label="false"]
+	32409364:s -> 7510613:n[label="true"]
+	//exceptional edges 
+	32409364:e -> 33423265:n [label="	java.io.IOException"color=red,ltail="cluster_31600929"]
+
+//  lines [96: 96] 
+	subgraph cluster_25745592 { 
+		label = "Block #13"
+		27398264[label="virtualinvoke $stack9.&lt;java.net.Socket: void close()&gt;()"]
+	}
+	27398264:s -> 7510613:n
+	//exceptional edges 
+	27398264:e -> 33423265:n [label="	java.io.IOException"color=red,ltail="cluster_25745592"]
+
+//  lines [102: 102] 
+	subgraph cluster_798605 { 
+		label = "Block #14"
+		7510613[label="goto"]
+	}
+	7510613:s -> 30491454:n
+
+//  lines [109: 112] 
+	subgraph cluster_33033220 { 
+		label = "Block #15"
+		30491454[label="data#1 = data#0"]
+		27857278[label="$stack13 = staticinvoke &lt;java.lang.System: java.lang.String getProperty(java.lang.String)&gt;(&quot;os.name&quot;)"]
+		19671650[label="$stack14 = virtualinvoke $stack13.&lt;java.lang.String: java.lang.String toLowerCase()&gt;()"]
+		19847227[label="$stack15 = virtualinvoke $stack14.&lt;java.lang.String: int indexOf(java.lang.String)&gt;(&quot;win&quot;)"]
+		31580688[label="if $stack15 &lt; 0"]
+
+		30491454 -> 27857278 -> 19671650 -> 19847227 -> 31580688
+	}
+	31580688:s -> 29570889:n[label="false"]
+	31580688:s -> 1195650:n[label="true"]
+
+//  lines [120: 120] 
+	subgraph cluster_15068839 { 
+		label = "Block #16"
+		1195650[label="socket#1 = &quot;/bin/ls &quot;"]
+	}
+	1195650:s -> 14654342:n
+
+//  lines [115: 115] 
+	subgraph cluster_15178467 { 
+		label = "Block #17"
+		29570889[label="socket#1 = &quot;c:\\WINDOWS\\SYSTEM32\\cmd.exe /c dir &quot;"]
+		25284245[label="goto"]
+
+		29570889 -> 25284245
+	}
+	25284245:s -> 14654342:n
+
+//  lines [124: 128] 
+	subgraph cluster_18566133 { 
+		label = "Block #18"
+		14654342[label="$stack20 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()"]
+		31677657[label="$stack16 = new java.lang.StringBuilder"]
+		8526486[label="specialinvoke $stack16.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		12838778[label="$stack17 = virtualinvoke $stack16.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(socket#1)"]
+		13803304[label="$stack18 = virtualinvoke $stack17.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(data#1)"]
+		33302155[label="$stack19 = virtualinvoke $stack18.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		23414049[label="readerBuffered#1 = virtualinvoke $stack20.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack19)"]
+		16868310[label="virtualinvoke readerBuffered#1.&lt;java.lang.Process: int waitFor()&gt;()"]
+		19700380[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		14654342 -> 31677657 -> 8526486 -> 12838778 -> 13803304 -> 33302155 -> 23414049 -> 16868310 -> 19700380
+	}
+
+
+//  lines [177: 178] 
+	subgraph cluster_28569166 { 
+		label = "Block #1"
+		21451187[label="args := @parameter0: java.lang.String[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		14114457[label="staticinvoke &lt;testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31: void mainFromParent(java.lang.String[])&gt;(args)"]
+		2406419[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		21451187 -> 14114457 -> 2406419
+	}
+
+
+//  lines [62: 63] 
+	subgraph cluster_6801022 { 
+		label = "Block #1"
+		18955154[label="byteHex := @parameter0: byte",shape=Mdiamond,color=grey50,fillcolor=white]
+		3325489[label="$stack1 = newarray (java.lang.Object)[1]"]
+		7815330[label="$stack2 = staticinvoke &lt;java.lang.Byte: java.lang.Byte valueOf(byte)&gt;(byteHex)"]
+		27655731[label="$stack1[0] = $stack2"]
+		10199960[label="$stack3 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02x&quot;, $stack1)"]
+		24858444[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack3)"]
+		12624741[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		33316792 -> 18955154 -> 3325489 -> 7815330 -> 27655731 -> 10199960 -> 24858444 -> 12624741
+	}
+
+
+//  lines [90: 90] 
+	subgraph cluster_5204962 { 
+		label = "Block #1"
+		9807749[label="return 1",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+
+//  lines [9: 9] 
+	subgraph cluster_6959636 { 
+		label = "Block #1"
+		1314233[label="this := @this: testcasesupport.AbstractTestCaseBase",shape=Mdiamond,color=grey50,fillcolor=white]
+		8538041[label="specialinvoke this.&lt;java.lang.Object: void &lt;init&gt;()&gt;()"]
+		9710616[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		17932027 -> 1314233 -> 8538041 -> 9710616
+	}
+
+
+//  lines [30: 30] 
+	subgraph cluster_1423336 { 
+		label = "Block #1"
+		10330637[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		19578022[label="specialinvoke this.&lt;testcasesupport.AbstractTestCase: void &lt;init&gt;()&gt;()"]
+		13818315[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		10330637 -> 19578022 -> 13818315
+	}
+
+
+//  lines [132: 133] 
+	subgraph cluster_15890667 { 
+		label = "Block #1"
+		27446135[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		18970163[label="specialinvoke this.&lt;testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31: void goodG2B()&gt;()"]
+		27362884[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		27446135 -> 18970163 -> 27362884
+	}
+
+
+//  lines [107: 110] 
+	subgraph cluster_28813211 { 
+		label = "Block #1"
+		4319031[label="byteBuffer := @parameter0: byte[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		17467315[label="$stack5 = new java.lang.StringBuffer"]
+		25455916[label="$stack3 = lengthof byteBuffer"]
+		30237985[label="$stack4 = $stack3 * 2"]
+		30676441[label="specialinvoke $stack5.&lt;java.lang.StringBuffer: void &lt;init&gt;(int)&gt;($stack4)"]
+		10705272[label="strBuffer = $stack5"]
+		13545776[label="i = 0"]
+
+		9807749 -> 4319031 -> 17467315 -> 25455916 -> 30237985 -> 30676441 -> 10705272 -> 13545776
+	}
+	13545776:s -> 24755078:n
+
+//  lines [110: 110] 
+	subgraph cluster_29538149 { 
+		label = "Block #2"
+		24755078[label="$stack6 = lengthof byteBuffer"]
+		263725[label="if i &gt;= $stack6"]
+
+		24755078 -> 263725
+	}
+	263725:s -> 9099067:n[label="false"]
+	263725:s -> 33105141:n[label="true"]
+
+//  lines [120: 120] 
+	subgraph cluster_29905679 { 
+		label = "Block #3"
+		33105141[label="$stack7 = virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.String toString()&gt;()"]
+		1583503[label="return $stack7",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		33105141 -> 1583503
+	}
+
+//  lines [112: 112] 
+	subgraph cluster_20594056 { 
+		label = "Block #4"
+		9099067[label="$stack8 = byteBuffer[i]"]
+		5871537[label="$stack9 = $stack8 &amp; 255"]
+		1600112[label="if $stack9 &gt;= 16"]
+
+		9099067 -> 5871537 -> 1600112
+	}
+	1600112:s -> 4792741:n[label="false"]
+	1600112:s -> 7742980:n[label="true"]
+
+//  lines [114: 114] 
+	subgraph cluster_11595040 { 
+		label = "Block #5"
+		4792741[label="virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)&gt;(&quot;0&quot;)"]
+	}
+	4792741:s -> 7742980:n
+
+//  lines [117: 110] 
+	subgraph cluster_10553432 { 
+		label = "Block #6"
+		7742980[label="$stack10 = byteBuffer[i]"]
+		17245859[label="$stack11 = $stack10 &amp; 255"]
+		9737432[label="$stack12 = (long) $stack11"]
+		22327375[label="$stack13 = staticinvoke &lt;java.lang.Long: java.lang.String toString(long,int)&gt;($stack12, 16)"]
+		16238785[label="virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)&gt;($stack13)"]
+		31150277[label="i = i + 1"]
+		33135109[label="goto"]
+
+		7742980 -> 17245859 -> 9737432 -> 22327375 -> 16238785 -> 31150277 -> 33135109
+	}
+	33135109:e -> 24755078:n
+
+
+//  lines [10: 10] 
+	subgraph cluster_31959752 { 
+		label = "Block #1"
+		10893287[label="this := @this: testcasesupport.AbstractTestCase",shape=Mdiamond,color=grey50,fillcolor=white]
+		17932027[label="specialinvoke this.&lt;testcasesupport.AbstractTestCaseBase: void &lt;init&gt;()&gt;()"]
+		9473216[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		19578022 -> 10893287 -> 17932027 -> 9473216
+	}
+
+
+}

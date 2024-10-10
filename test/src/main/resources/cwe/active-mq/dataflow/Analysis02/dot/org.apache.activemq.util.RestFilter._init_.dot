@@ -1,0 +1,20 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [52: 52] 
+	subgraph cluster_25821411 { 
+		label = "Block #1"
+		3093247[label="this := @this: org.apache.activemq.util.RestFilter",shape=Mdiamond,color=grey50,fillcolor=white]
+		22800059[label="specialinvoke this.&lt;java.lang.Object: void &lt;init&gt;()&gt;()"]
+		33357518[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		3093247 -> 22800059 -> 33357518
+	}
+
+}

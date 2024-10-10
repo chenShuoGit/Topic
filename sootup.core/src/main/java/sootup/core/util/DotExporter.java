@@ -27,13 +27,14 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringEscapeUtils;
-import sootup.core.graph.BasicBlock;
-import sootup.core.graph.StmtGraph;
+import sootup.core.graph.*;
 import sootup.core.jimple.common.stmt.*;
 import sootup.core.jimple.javabytecode.stmt.JSwitchStmt;
 import sootup.core.signatures.MethodSignature;
 import sootup.core.types.ClassType;
+import sootup.core.util.tree.TreeNode;
 
 /**
  * Exports a StmtGraph into a Dot representation (see https://graphviz.org) to visualize the Graph
@@ -200,6 +201,61 @@ public class DotExporter {
     }
   }
 
+  private static void forwardTraversal(TreeNode<Stmt> tree, StringBuilder sb) {
+    if (Objects.isNull(tree)) {
+      return;
+    }
+    forwardTraversal(tree.getFirstChild(), sb);
+    forwardTraversal(tree.getBrother(), sb);
+    Stmt stmt = tree.getData();
+    // 添加节点信息
+    sb.append("\t\t")
+            .append(stmt.hashCode())
+            .append("[label=\"")
+            .append(escape(stmt.toString()))
+            .append("\"");
+    sb.append("]\n");
+    //添加连线
+    TreeNode<Stmt> firstChild = tree.getFirstChild();
+    if (Objects.nonNull(firstChild)) {
+      sb.append("\t\t")
+              .append(firstChild.getData().hashCode())
+              .append(" -> ")
+              .append(tree.getData().hashCode())
+              .append("\n");
+    }
+    TreeNode<Stmt> brother = null;
+    if (Objects.nonNull(firstChild) && Objects.nonNull(firstChild.getBrother())) {
+      brother = firstChild.getBrother();
+      while (Objects.nonNull(brother)) {
+        sb.append("\t\t")
+                .append(brother.getData().hashCode())
+                .append(" -> ")
+                .append(tree.getData().hashCode())
+                .append("\n");
+        brother = brother.getBrother();
+      }
+    }
+  }
+
+
+  public static String buildDataFlowGraphByTreeNode(TreeNode<Stmt> tree) {
+
+    StringBuilder sb = new StringBuilder();
+    buildDiGraphObject(sb);
+
+    sb.append("\tsubgraph cluster_")
+            .append(tree.hashCode())
+            .append(" { \n")
+            .append("\t\tlabel = \"DataFlow")
+            .append("\"\n");
+    // 此处进行树的遍历
+    forwardTraversal(tree, sb);
+    sb.append("\t}\n\n");
+
+    return sb.append("}").toString();
+  }
+
   private static String escape(String str) {
     // ", &, <, and >
     return StringEscapeUtils.escapeXml10(str);
@@ -225,4 +281,5 @@ public class DotExporter {
       throw new RuntimeException(e);
     }
   }
+
 }

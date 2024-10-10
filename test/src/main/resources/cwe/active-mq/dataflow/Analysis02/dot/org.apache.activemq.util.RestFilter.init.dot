@@ -1,0 +1,25 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [66: 69] 
+	subgraph cluster_4861606 { 
+		label = "Block #1"
+		7784653[label="this := @this: org.apache.activemq.util.RestFilter",shape=Mdiamond,color=grey50,fillcolor=white]
+		4179266[label="filterConfig := @parameter0: javax.servlet.FilterConfig"]
+		22069592[label="this.&lt;org.apache.activemq.util.RestFilter: javax.servlet.FilterConfig filterConfig&gt; = filterConfig"]
+		22327375[label="$stack2 = interfaceinvoke filterConfig.&lt;javax.servlet.FilterConfig: java.lang.String getInitParameter(java.lang.String)&gt;(&quot;read-permission-role&quot;)"]
+		9737432[label="this.&lt;org.apache.activemq.util.RestFilter: java.lang.String readPermissionRole&gt; = $stack2"]
+		470591[label="$stack3 = interfaceinvoke filterConfig.&lt;javax.servlet.FilterConfig: java.lang.String getInitParameter(java.lang.String)&gt;(&quot;write-permission-role&quot;)"]
+		18550058[label="this.&lt;org.apache.activemq.util.RestFilter: java.lang.String writePermissionRole&gt; = $stack3"]
+		14289216[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		7784653 -> 4179266 -> 22069592 -> 22327375 -> 9737432 -> 470591 -> 18550058 -> 14289216
+	}
+
+}

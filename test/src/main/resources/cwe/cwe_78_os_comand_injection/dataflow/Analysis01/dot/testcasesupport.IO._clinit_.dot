@@ -1,0 +1,23 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [23: 86] 
+	subgraph cluster_4246932 { 
+		label = "Block #1"
+		23345353[label="$stack0 = staticinvoke &lt;java.util.logging.Logger: java.util.logging.Logger getLogger(java.lang.String)&gt;(&quot;testcases&quot;)",shape=Mdiamond,color=grey50,fillcolor=white]
+		15762504[label="&lt;testcasesupport.IO: java.util.logging.Logger logger&gt; = $stack0"]
+		31016500[label="&lt;testcasesupport.IO: boolean staticTrue&gt; = 1"]
+		2706139[label="&lt;testcasesupport.IO: boolean staticFalse&gt; = 0"]
+		19986569[label="&lt;testcasesupport.IO: int staticFive&gt; = 5"]
+		21563224[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		23345353 -> 15762504 -> 31016500 -> 2706139 -> 19986569 -> 21563224
+	}
+
+}

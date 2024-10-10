@@ -1,0 +1,20 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [177: 178] 
+	subgraph cluster_12146391 { 
+		label = "Block #1"
+		17599129[label="args := @parameter0: java.lang.String[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		13498557[label="staticinvoke &lt;testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31: void mainFromParent(java.lang.String[])&gt;(args)"]
+		2599475[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		17599129 -> 13498557 -> 2599475
+	}
+
+}

@@ -1,0 +1,42 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [72: 72] 
+	subgraph cluster_8567443 { 
+		label = "Block #1"
+		15550[label="this := @this: org.apache.activemq.util.FilenameGuardFilter$GuardedHttpServletRequest",shape=Mdiamond,color=grey50,fillcolor=white]
+		33306907[label="name := @parameter0: java.lang.String"]
+		6897497[label="$stack2 = virtualinvoke name.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;Destination&quot;)"]
+		20836333[label="if $stack2 == 0"]
+
+		15550 -> 33306907 -> 6897497 -> 20836333
+	}
+	20836333:s -> 4961371:n[label="false"]
+	20836333:s -> 4243057:n[label="true"]
+
+//  lines [75: 75] 
+	subgraph cluster_26422294 { 
+		label = "Block #2"
+		4243057[label="$stack3 = specialinvoke this.&lt;javax.servlet.http.HttpServletRequestWrapper: java.lang.String getParameter(java.lang.String)&gt;(name)"]
+		21537354[label="return $stack3",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		4243057 -> 21537354
+	}
+
+//  lines [73: 73] 
+	subgraph cluster_31400915 { 
+		label = "Block #3"
+		4961371[label="$stack4 = specialinvoke this.&lt;javax.servlet.http.HttpServletRequestWrapper: java.lang.String getParameter(java.lang.String)&gt;(name)"]
+		20699794[label="$stack5 = specialinvoke this.&lt;org.apache.activemq.util.FilenameGuardFilter$GuardedHttpServletRequest: java.lang.String guard(java.lang.String)&gt;($stack4)"]
+		30736386[label="return $stack5",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		4961371 -> 20699794 -> 30736386
+	}
+
+}

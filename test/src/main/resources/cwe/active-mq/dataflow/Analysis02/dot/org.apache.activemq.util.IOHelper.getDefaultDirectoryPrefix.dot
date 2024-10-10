@@ -1,0 +1,25 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [51: 51] 
+	subgraph cluster_9919528 { 
+		label = "Block #1"
+		18223914[label="$stack1 = staticinvoke &lt;java.lang.System: java.lang.String getProperty(java.lang.String,java.lang.String)&gt;(&quot;org.apache.activemq.default.directory.prefix&quot;, &quot;&quot;)",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+	18223914:s -> 30460305:n
+	//exceptional edges 
+	18223914:e -> 33251383:n [label="	java.lang.Exception"color=red,ltail="cluster_9919528"]
+
+//  lines [51: 51] 
+	subgraph cluster_3502263 { 
+		label = "Block #2"
+		30460305[label="return $stack1",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}

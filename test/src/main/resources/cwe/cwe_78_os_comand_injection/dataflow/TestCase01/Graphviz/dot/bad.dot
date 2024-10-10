@@ -1,0 +1,35 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+	subgraph cluster_1028873 { 
+		label = "DataFlow"
+		31677657[label="$stack16 = new java.lang.StringBuilder"]
+		1195650[label="socket#1 = &quot;/bin/ls &quot;"]
+		29570889[label="socket#1 = &quot;c:\\WINDOWS\\SYSTEM32\\cmd.exe /c dir &quot;"]
+		2372048[label="$stack12 = new java.io.BufferedReader"]
+		1248325[label="data#0 = virtualinvoke $stack12.&lt;java.io.BufferedReader: java.lang.String readLine()&gt;()"]
+		2372048 -> 1248325
+		30491454[label="data#1 = data#0"]
+		1248325 -> 30491454
+		12838778[label="$stack17 = virtualinvoke $stack16.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(socket#1)"]
+		29570889 -> 12838778
+		1195650 -> 12838778
+		31677657 -> 12838778
+		13803304[label="$stack18 = virtualinvoke $stack17.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(data#1)"]
+		12838778 -> 13803304
+		30491454 -> 13803304
+		33302155[label="$stack19 = virtualinvoke $stack18.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		13803304 -> 33302155
+		14654342[label="$stack20 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()"]
+		23414049[label="readerBuffered#1 = virtualinvoke $stack20.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack19)"]
+		14654342 -> 23414049
+		33302155 -> 23414049
+	}
+
+}

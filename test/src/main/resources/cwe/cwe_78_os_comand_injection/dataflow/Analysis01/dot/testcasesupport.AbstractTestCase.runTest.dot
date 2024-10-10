@@ -1,0 +1,80 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [18: 18] 
+	subgraph cluster_26412820 { 
+		label = "Block #1"
+		19724203[label="this := @this: testcasesupport.AbstractTestCase",shape=Mdiamond,color=grey50,fillcolor=white]
+		5436066[label="className := @parameter0: java.lang.String"]
+		16867831[label="$stack8 = new java.lang.StringBuilder"]
+		7764562[label="specialinvoke $stack8.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		26678245[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;Starting tests for Class &quot;)"]
+		3389263[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(className)"]
+		30914495[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		19027538[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack11)"]
+
+		19724203 -> 5436066 -> 16867831 -> 7764562 -> 26678245 -> 3389263 -> 30914495 -> 19027538
+	}
+	19027538:s -> 1738274:n
+
+//  lines [22: 24] 
+	subgraph cluster_29501867 { 
+		label = "Block #2"
+		1738274[label="virtualinvoke this.&lt;testcasesupport.AbstractTestCase: void good()&gt;()"]
+		20264824[label="$stack12 = new java.lang.StringBuilder"]
+		755193[label="specialinvoke $stack12.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		20272201[label="$stack13 = virtualinvoke $stack12.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;Completed good() for Class &quot;)"]
+		27397991[label="$stack14 = virtualinvoke $stack13.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(className)"]
+		29841580[label="$stack15 = virtualinvoke $stack14.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		3021042[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack15)"]
+
+		1738274 -> 20264824 -> 755193 -> 20272201 -> 27397991 -> 29841580 -> 3021042
+	}
+	3021042:s -> 5858802:n
+	//exceptional edges 
+	3021042:e -> 31350964:n [label="	java.lang.Throwable"color=red,ltail="cluster_29501867"]
+
+//  lines [40: 40] 
+	subgraph cluster_21259614 { 
+		label = "Block #3"
+		5858802[label="goto"]
+	}
+	5858802:s -> 4289043:n
+
+//  lines [44: 46] 
+	subgraph cluster_33017949 { 
+		label = "Block #4"
+		4289043[label="virtualinvoke this.&lt;testcasesupport.AbstractTestCase: void bad()&gt;()"]
+		17064579[label="$stack16 = new java.lang.StringBuilder"]
+		17731470[label="specialinvoke $stack16.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		30424900[label="$stack17 = virtualinvoke $stack16.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;Completed bad() for Class &quot;)"]
+		9323380[label="$stack18 = virtualinvoke $stack17.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(className)"]
+		23595866[label="$stack19 = virtualinvoke $stack18.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		17071363[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack19)"]
+
+		4289043 -> 17064579 -> 17731470 -> 30424900 -> 9323380 -> 23595866 -> 17071363
+	}
+	17071363:s -> 31010786:n
+	//exceptional edges 
+	17071363:e -> 12320717:n [label="	java.lang.Throwable"color=red,ltail="cluster_33017949"]
+
+//  lines [62: 62] 
+	subgraph cluster_32712002 { 
+		label = "Block #5"
+		31010786[label="goto"]
+	}
+	31010786:s -> 30673495:n
+
+//  lines [63: 63] 
+	subgraph cluster_13876258 { 
+		label = "Block #6"
+		30673495[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}

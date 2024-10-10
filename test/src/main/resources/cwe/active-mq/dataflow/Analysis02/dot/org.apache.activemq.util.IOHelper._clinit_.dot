@@ -1,0 +1,26 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [119: 121] 
+	subgraph cluster_8361371 { 
+		label = "Block #1"
+		24051796[label="$stack0 = staticinvoke &lt;java.lang.System: java.lang.String getProperty(java.lang.String,java.lang.String)&gt;(&quot;MaximumDirNameLength&quot;, &quot;200&quot;)",shape=Mdiamond,color=grey50,fillcolor=white]
+		10546712[label="$stack1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(java.lang.String)&gt;($stack0)"]
+		30727205[label="$stack2 = virtualinvoke $stack1.&lt;java.lang.Integer: int intValue()&gt;()"]
+		16521230[label="&lt;org.apache.activemq.util.IOHelper: int MAX_DIR_NAME_LENGTH&gt; = $stack2"]
+		6276516[label="$stack3 = staticinvoke &lt;java.lang.System: java.lang.String getProperty(java.lang.String,java.lang.String)&gt;(&quot;MaximumFileNameLength&quot;, &quot;64&quot;)"]
+		33148478[label="$stack4 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(java.lang.String)&gt;($stack3)"]
+		6359184[label="$stack5 = virtualinvoke $stack4.&lt;java.lang.Integer: int intValue()&gt;()"]
+		23824629[label="&lt;org.apache.activemq.util.IOHelper: int MAX_FILE_NAME_LENGTH&gt; = $stack5"]
+		1755304[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		24051796 -> 10546712 -> 30727205 -> 16521230 -> 6276516 -> 33148478 -> 6359184 -> 23824629 -> 1755304
+	}
+
+}

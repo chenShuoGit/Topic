@@ -1,0 +1,51 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [108: 109] 
+	subgraph cluster_26291353 { 
+		label = "Block #1"
+		14899164[label="in := @parameter0: java.io.InputStream",shape=Mdiamond,color=grey50,fillcolor=white]
+		16868310[label="out := @parameter1: java.io.OutputStream"]
+		11133410[label="buffer = newarray (byte)[4096]"]
+		1659610[label="len = virtualinvoke in.&lt;java.io.InputStream: int read(byte[])&gt;(buffer)"]
+
+		14899164 -> 16868310 -> 11133410 -> 1659610
+	}
+	1659610:s -> 11906178:n
+
+//  lines [110: 110] 
+	subgraph cluster_20102218 { 
+		label = "Block #2"
+		11906178[label="if len &lt; 0"]
+	}
+	11906178:s -> 28046271:n[label="false"]
+	11906178:s -> 3842807:n[label="true"]
+
+//  lines [114: 116] 
+	subgraph cluster_20592780 { 
+		label = "Block #3"
+		3842807[label="virtualinvoke in.&lt;java.io.InputStream: void close()&gt;()"]
+		20930634[label="virtualinvoke out.&lt;java.io.OutputStream: void close()&gt;()"]
+		28246124[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		3842807 -> 20930634 -> 28246124
+	}
+
+//  lines [111: 112] 
+	subgraph cluster_8694141 { 
+		label = "Block #4"
+		28046271[label="virtualinvoke out.&lt;java.io.OutputStream: void write(byte[],int,int)&gt;(buffer, 0, len)"]
+		17145020[label="len = virtualinvoke in.&lt;java.io.InputStream: int read(byte[])&gt;(buffer)"]
+		10218542[label="goto"]
+
+		28046271 -> 17145020 -> 10218542
+	}
+	10218542:e -> 11906178:n
+
+}

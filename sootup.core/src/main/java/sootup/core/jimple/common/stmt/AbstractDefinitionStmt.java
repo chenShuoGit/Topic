@@ -58,8 +58,9 @@ public abstract class AbstractDefinitionStmt extends AbstractStmt {
   @Nonnull
   public final Stream<Value> getUses() {
     Value rightOp = getRightOp();
+    Stream<Value> uses = rightOp.getUses();
     return Stream.concat(
-        Stream.concat(getLeftOp().getUses(), Stream.of(rightOp)), rightOp.getUses());
+        Stream.concat(getLeftOp().getUses(), Stream.of(rightOp)), uses);
   }
 
   @Override

@@ -1,0 +1,16 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [95: 95] 
+	subgraph cluster_31596604 { 
+		label = "Block #1"
+		2422283[label="return 0",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}

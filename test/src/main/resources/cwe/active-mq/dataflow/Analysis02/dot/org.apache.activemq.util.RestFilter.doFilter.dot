@@ -1,0 +1,293 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [76: 76] 
+	subgraph cluster_14926285 { 
+		label = "Block #1"
+		29112824[label="this := @this: org.apache.activemq.util.RestFilter",shape=Mdiamond,color=grey50,fillcolor=white]
+		32936080[label="request := @parameter0: javax.servlet.ServletRequest"]
+		9171730[label="response := @parameter1: javax.servlet.ServletResponse"]
+		10642370[label="chain := @parameter2: javax.servlet.FilterChain"]
+		20924694[label="$stack6 = request instanceof javax.servlet.http.HttpServletRequest"]
+		21805061[label="if $stack6 == 0"]
+
+		29112824 -> 32936080 -> 9171730 -> 10642370 -> 20924694 -> 21805061
+	}
+	21805061:s -> 19327301:n[label="false"]
+	21805061:s -> 13491488:n[label="true"]
+
+//  lines [76: 76] 
+	subgraph cluster_21885266 { 
+		label = "Block #2"
+		19327301[label="$stack15 = response instanceof javax.servlet.http.HttpServletResponse"]
+		27679269[label="if $stack15 != 0"]
+
+		19327301 -> 27679269
+	}
+	27679269:s -> 13491488:n[label="false"]
+	27679269:s -> 31285860:n[label="true"]
+
+//  lines [84: 87] 
+	subgraph cluster_28607930 { 
+		label = "Block #3"
+		31285860[label="httpRequest = (javax.servlet.http.HttpServletRequest) request"]
+		26021986[label="httpResponse = (javax.servlet.http.HttpServletResponse) response"]
+		11187352[label="#l0 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+		12935927[label="$stack16 = interfaceinvoke #l0.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getMethod()&gt;()"]
+		25929928[label="$stack17 = virtualinvoke $stack16.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;MOVE&quot;)"]
+		28943922[label="if $stack17 == 0"]
+
+		31285860 -> 26021986 -> 11187352 -> 12935927 -> 25929928 -> 28943922
+	}
+	28943922:s -> 11550799:n[label="false"]
+	28943922:s -> 28383083:n[label="true"]
+
+//  lines [89: 89] 
+	subgraph cluster_18315851 { 
+		label = "Block #4"
+		28383083[label="#l11 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	28383083:s -> 32836556:n
+
+//  lines [89: 89] 
+	subgraph cluster_145362 { 
+		label = "Block #5"
+		32836556[label="$stack18 = interfaceinvoke #l11.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getMethod()&gt;()"]
+		30560454[label="$stack19 = virtualinvoke $stack18.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;PUT&quot;)"]
+		10933670[label="if $stack19 == 0"]
+
+		32836556 -> 30560454 -> 10933670
+	}
+	10933670:s -> 26448682:n[label="false"]
+	10933670:s -> 22671767:n[label="true"]
+
+//  lines [91: 91] 
+	subgraph cluster_27912136 { 
+		label = "Block #6"
+		22671767[label="#l1 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	22671767:s -> 12660881:n
+
+//  lines [91: 91] 
+	subgraph cluster_29914401 { 
+		label = "Block #7"
+		12660881[label="$stack20 = interfaceinvoke #l1.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getMethod()&gt;()"]
+		20093513[label="$stack21 = virtualinvoke $stack20.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;GET&quot;)"]
+		19538076[label="if $stack21 == 0"]
+
+		12660881 -> 20093513 -> 19538076
+	}
+	19538076:s -> 10387176:n[label="false"]
+	19538076:s -> 8378574:n[label="true"]
+
+//  lines [96: 96] 
+	subgraph cluster_1953829 { 
+		label = "Block #8"
+		8378574[label="#l6 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	8378574:s -> 15291816:n
+
+//  lines [96: 96] 
+	subgraph cluster_22317576 { 
+		label = "Block #9"
+		15291816[label="$stack22 = interfaceinvoke #l6.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getMethod()&gt;()"]
+		16387911[label="$stack23 = virtualinvoke $stack22.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;DELETE&quot;)"]
+		1472465[label="if $stack23 == 0"]
+
+		15291816 -> 16387911 -> 1472465
+	}
+	1472465:s -> 912458:n[label="false"]
+	1472465:s -> 23981827:n[label="true"]
+
+//  lines [99: 99] 
+	subgraph cluster_28192720 { 
+		label = "Block #10"
+		23981827[label="#l13 = (javax.servlet.ServletResponse) httpResponse"]
+	}
+	23981827:s -> 27025178:n
+
+//  lines [99: 99] 
+	subgraph cluster_18312385 { 
+		label = "Block #11"
+		27025178[label="#l12 = (javax.servlet.ServletRequest) httpRequest"]
+	}
+	27025178:s -> 10293437:n
+
+//  lines [99: 99] 
+	subgraph cluster_1771050 { 
+		label = "Block #12"
+		10293437[label="interfaceinvoke chain.&lt;javax.servlet.FilterChain: void doFilter(javax.servlet.ServletRequest,javax.servlet.ServletResponse)&gt;(#l12, #l13)"]
+	}
+	10293437:s -> 29474029:n
+
+//  lines [97: 97] 
+	subgraph cluster_13942654 { 
+		label = "Block #13"
+		912458[label="#l15 = (javax.servlet.http.HttpServletResponse) httpResponse"]
+	}
+	912458:s -> 7792304:n
+
+//  lines [97: 97] 
+	subgraph cluster_1940811 { 
+		label = "Block #14"
+		7792304[label="#l14 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	7792304:s -> 31231691:n
+
+//  lines [97: 97] 
+	subgraph cluster_18513807 { 
+		label = "Block #15"
+		31231691[label="virtualinvoke this.&lt;org.apache.activemq.util.RestFilter: void doDelete(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)&gt;(#l14, #l15)"]
+		21638855[label="goto"]
+
+		31231691 -> 21638855
+	}
+	21638855:s -> 29474029:n
+
+//  lines [92: 92] 
+	subgraph cluster_16896308 { 
+		label = "Block #16"
+		10387176[label="#l4 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	10387176:s -> 29591240:n
+
+//  lines [92: 92] 
+	subgraph cluster_13876258 { 
+		label = "Block #17"
+		29591240[label="#l5 = (javax.servlet.http.HttpServletResponse) httpResponse"]
+	}
+	29591240:s -> 31849624:n
+
+//  lines [92: 92] 
+	subgraph cluster_23232622 { 
+		label = "Block #18"
+		31849624[label="$stack24 = virtualinvoke this.&lt;org.apache.activemq.util.RestFilter: boolean checkGet(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)&gt;(#l4, #l5)"]
+		4627528[label="if $stack24 == 0"]
+
+		31849624 -> 4627528
+	}
+	4627528:s -> 5407122:n[label="false"]
+	4627528:s -> 29474029:n[label="true"]
+
+//  lines [93: 93] 
+	subgraph cluster_7905343 { 
+		label = "Block #19"
+		5407122[label="#l8 = (javax.servlet.ServletResponse) httpResponse"]
+	}
+	5407122:s -> 33448889:n
+
+//  lines [93: 93] 
+	subgraph cluster_8312591 { 
+		label = "Block #20"
+		33448889[label="#l7 = (javax.servlet.ServletRequest) httpRequest"]
+	}
+	33448889:s -> 28287291:n
+
+//  lines [93: 93] 
+	subgraph cluster_16349264 { 
+		label = "Block #21"
+		28287291[label="interfaceinvoke chain.&lt;javax.servlet.FilterChain: void doFilter(javax.servlet.ServletRequest,javax.servlet.ServletResponse)&gt;(#l7, #l8)"]
+		338432[label="goto"]
+
+		28287291 -> 338432
+	}
+	338432:s -> 29474029:n
+
+//  lines [90: 90] 
+	subgraph cluster_4990863 { 
+		label = "Block #22"
+		26448682[label="#l2 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	26448682:s -> 17764625:n
+
+//  lines [90: 90] 
+	subgraph cluster_28443809 { 
+		label = "Block #23"
+		17764625[label="#l3 = (javax.servlet.http.HttpServletResponse) httpResponse"]
+	}
+	17764625:s -> 5032787:n
+
+//  lines [90: 90] 
+	subgraph cluster_19658353 { 
+		label = "Block #24"
+		5032787[label="virtualinvoke this.&lt;org.apache.activemq.util.RestFilter: void doPut(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)&gt;(#l2, #l3)"]
+		24635675[label="goto"]
+
+		5032787 -> 24635675
+	}
+	24635675:s -> 29474029:n
+
+//  lines [88: 88] 
+	subgraph cluster_17964467 { 
+		label = "Block #25"
+		11550799[label="#l9 = (javax.servlet.http.HttpServletRequest) httpRequest"]
+	}
+	11550799:s -> 6750210:n
+
+//  lines [88: 88] 
+	subgraph cluster_17277142 { 
+		label = "Block #26"
+		6750210[label="#l10 = (javax.servlet.http.HttpServletResponse) httpResponse"]
+	}
+	6750210:s -> 18251703:n
+
+//  lines [88: 88] 
+	subgraph cluster_3471668 { 
+		label = "Block #27"
+		18251703[label="virtualinvoke this.&lt;org.apache.activemq.util.RestFilter: void doMove(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)&gt;(#l9, #l10)"]
+		29060074[label="goto"]
+
+		18251703 -> 29060074
+	}
+	29060074:s -> 29474029:n
+
+//  lines [101: 101] 
+	subgraph cluster_27086749 { 
+		label = "Block #28"
+		29474029[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+//  lines [77: 77] 
+	subgraph cluster_17314565 { 
+		label = "Block #29"
+		13491488[label="$stack7 = &lt;org.apache.activemq.util.RestFilter: org.slf4j.Logger LOG&gt;"]
+		13736250[label="$stack8 = interfaceinvoke $stack7.&lt;org.slf4j.Logger: boolean isDebugEnabled()&gt;()"]
+		24096422[label="if $stack8 == 0"]
+
+		13491488 -> 13736250 -> 24096422
+	}
+	24096422:s -> 4083335:n[label="false"]
+	24096422:s -> 4133172:n[label="true"]
+
+//  lines [78: 78] 
+	subgraph cluster_27378321 { 
+		label = "Block #30"
+		4083335[label="$stack10 = &lt;org.apache.activemq.util.RestFilter: org.slf4j.Logger LOG&gt;"]
+		18085308[label="$stack9 = new java.lang.StringBuilder"]
+		16843650[label="specialinvoke $stack9.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		1341894[label="$stack12 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;request not HTTP, can not understand: &quot;)"]
+		9557567[label="$stack11 = virtualinvoke request.&lt;java.lang.Object: java.lang.String toString()&gt;()"]
+		21185218[label="$stack13 = virtualinvoke $stack12.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;($stack11)"]
+		19928099[label="$stack14 = virtualinvoke $stack13.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		14570065[label="interfaceinvoke $stack10.&lt;org.slf4j.Logger: void debug(java.lang.String)&gt;($stack14)"]
+
+		4083335 -> 18085308 -> 16843650 -> 1341894 -> 9557567 -> 21185218 -> 19928099 -> 14570065
+	}
+	14570065:s -> 4133172:n
+
+//  lines [80: 81] 
+	subgraph cluster_23654208 { 
+		label = "Block #31"
+		4133172[label="interfaceinvoke chain.&lt;javax.servlet.FilterChain: void doFilter(javax.servlet.ServletRequest,javax.servlet.ServletResponse)&gt;(request, response)"]
+		17480852[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		4133172 -> 17480852
+	}
+
+}

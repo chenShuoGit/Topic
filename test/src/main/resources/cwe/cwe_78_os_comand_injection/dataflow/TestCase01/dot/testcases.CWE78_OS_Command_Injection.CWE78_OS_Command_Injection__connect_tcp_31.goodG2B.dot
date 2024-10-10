@@ -1,0 +1,59 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [143: 151] 
+	subgraph cluster_28712778 { 
+		label = "Block #1"
+		5810190[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		16669760[label="dataCopy = &quot;foo&quot;"]
+		32223249[label="data#1 = &quot;foo&quot;"]
+		3248550[label="$stack5 = staticinvoke &lt;java.lang.System: java.lang.String getProperty(java.lang.String)&gt;(&quot;os.name&quot;)"]
+		24953212[label="$stack6 = virtualinvoke $stack5.&lt;java.lang.String: java.lang.String toLowerCase()&gt;()"]
+		16501338[label="$stack7 = virtualinvoke $stack6.&lt;java.lang.String: int indexOf(java.lang.String)&gt;(&quot;win&quot;)"]
+		6937424[label="if $stack7 &lt; 0"]
+
+		5810190 -> 16669760 -> 32223249 -> 3248550 -> 24953212 -> 16501338 -> 6937424
+	}
+	6937424:s -> 23472759:n[label="false"]
+	6937424:s -> 17740980:n[label="true"]
+
+//  lines [159: 159] 
+	subgraph cluster_19111293 { 
+		label = "Block #2"
+		17740980[label="osCommand = &quot;/bin/ls &quot;"]
+	}
+	17740980:s -> 26027648:n
+
+//  lines [154: 154] 
+	subgraph cluster_19960627 { 
+		label = "Block #3"
+		23472759[label="osCommand = &quot;c:\\WINDOWS\\SYSTEM32\\cmd.exe /c dir &quot;"]
+		28278589[label="goto"]
+
+		23472759 -> 28278589
+	}
+	28278589:s -> 26027648:n
+
+//  lines [163: 167] 
+	subgraph cluster_25284245 { 
+		label = "Block #4"
+		26027648[label="$stack12 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()"]
+		22068056[label="$stack8 = new java.lang.StringBuilder"]
+		12907424[label="specialinvoke $stack8.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		11386013[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(osCommand)"]
+		9179820[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;foo&quot;)"]
+		27504421[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		25458456[label="process = virtualinvoke $stack12.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack11)"]
+		23598067[label="virtualinvoke process.&lt;java.lang.Process: int waitFor()&gt;()"]
+		15051378[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		26027648 -> 22068056 -> 12907424 -> 11386013 -> 9179820 -> 27504421 -> 25458456 -> 23598067 -> 15051378
+	}
+
+}

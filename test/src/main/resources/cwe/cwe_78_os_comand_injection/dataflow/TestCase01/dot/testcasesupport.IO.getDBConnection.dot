@@ -1,0 +1,19 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [70: 70] 
+	subgraph cluster_19986569 { 
+		label = "Block #1"
+		15762504[label="$stack0 = staticinvoke &lt;java.sql.DriverManager: java.sql.Connection getConnection(java.lang.String,java.lang.String,java.lang.String)&gt;(&quot;&quot;, &quot;&quot;, &quot;&quot;)",shape=Mdiamond,color=grey50,fillcolor=white]
+		7317325[label="return $stack0",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		15762504 -> 7317325
+	}
+
+}

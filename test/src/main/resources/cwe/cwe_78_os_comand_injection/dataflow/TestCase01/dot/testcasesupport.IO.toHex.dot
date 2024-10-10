@@ -1,0 +1,79 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [107: 110] 
+	subgraph cluster_24349314 { 
+		label = "Block #1"
+		31349900[label="byteBuffer := @parameter0: byte[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		13556260[label="$stack5 = new java.lang.StringBuffer"]
+		31556208[label="$stack3 = lengthof byteBuffer"]
+		18263844[label="$stack4 = $stack3 * 2"]
+		8136973[label="specialinvoke $stack5.&lt;java.lang.StringBuffer: void &lt;init&gt;(int)&gt;($stack4)"]
+		1980168[label="strBuffer = $stack5"]
+		1583503[label="i = 0"]
+
+		31349900 -> 13556260 -> 31556208 -> 18263844 -> 8136973 -> 1980168 -> 1583503
+	}
+	1583503:s -> 20641593:n
+
+//  lines [110: 110] 
+	subgraph cluster_1996803 { 
+		label = "Block #2"
+		20641593[label="$stack6 = lengthof byteBuffer"]
+		27597365[label="if i &gt;= $stack6"]
+
+		20641593 -> 27597365
+	}
+	27597365:s -> 5396549:n[label="false"]
+	27597365:s -> 3639539:n[label="true"]
+
+//  lines [120: 120] 
+	subgraph cluster_4861606 { 
+		label = "Block #3"
+		3639539[label="$stack7 = virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.String toString()&gt;()"]
+		15214740[label="return $stack7",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		3639539 -> 15214740
+	}
+
+//  lines [112: 112] 
+	subgraph cluster_7636621 { 
+		label = "Block #4"
+		5396549[label="$stack8 = byteBuffer[i]"]
+		13996678[label="$stack9 = $stack8 &amp; 255"]
+		20803984[label="if $stack9 &gt;= 16"]
+
+		5396549 -> 13996678 -> 20803984
+	}
+	20803984:s -> 17037394:n[label="false"]
+	20803984:s -> 19112467:n[label="true"]
+
+//  lines [114: 114] 
+	subgraph cluster_5342653 { 
+		label = "Block #5"
+		17037394[label="virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)&gt;(&quot;0&quot;)"]
+	}
+	17037394:s -> 19112467:n
+
+//  lines [117: 110] 
+	subgraph cluster_28721761 { 
+		label = "Block #6"
+		19112467[label="$stack10 = byteBuffer[i]"]
+		3583738[label="$stack11 = $stack10 &amp; 255"]
+		30829267[label="$stack12 = (long) $stack11"]
+		23806515[label="$stack13 = staticinvoke &lt;java.lang.Long: java.lang.String toString(long,int)&gt;($stack12, 16)"]
+		16916076[label="virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)&gt;($stack13)"]
+		30237985[label="i = i + 1"]
+		28813211[label="goto"]
+
+		19112467 -> 3583738 -> 30829267 -> 23806515 -> 16916076 -> 30237985 -> 28813211
+	}
+	28813211:e -> 20641593:n
+
+}

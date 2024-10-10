@@ -1,0 +1,79 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [139: 139] 
+	subgraph cluster_17932027 { 
+		label = "Block #1"
+		31959752[label="this := @this: org.apache.activemq.util.RestFilter",shape=Mdiamond,color=grey50,fillcolor=white]
+		26908315[label="request := @parameter0: javax.servlet.http.HttpServletRequest"]
+		9473216[label="response := @parameter1: javax.servlet.http.HttpServletResponse"]
+		13463647[label="$stack3 = &lt;org.apache.activemq.util.RestFilter: org.slf4j.Logger LOG&gt;"]
+		20558579[label="$stack4 = interfaceinvoke $stack3.&lt;org.slf4j.Logger: boolean isDebugEnabled()&gt;()"]
+		31425720[label="if $stack4 == 0"]
+
+		31959752 -> 26908315 -> 9473216 -> 13463647 -> 20558579 -> 31425720
+	}
+	31425720:s -> 31350964:n[label="false"]
+	31425720:s -> 22981361:n[label="true"]
+
+//  lines [140: 140] 
+	subgraph cluster_10456083 { 
+		label = "Block #2"
+		31350964[label="$stack9 = &lt;org.apache.activemq.util.RestFilter: org.slf4j.Logger LOG&gt;"]
+		2522868[label="$stack8 = new java.lang.StringBuilder"]
+		15607830[label="specialinvoke $stack8.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		30914495[label="$stack11 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;RESTful file access: GET request for &quot;)"]
+		2686884[label="$stack10 = interfaceinvoke request.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getRequestURI()&gt;()"]
+		11443029[label="$stack12 = virtualinvoke $stack11.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;($stack10)"]
+		20272201[label="$stack13 = virtualinvoke $stack12.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		24119573[label="interfaceinvoke $stack9.&lt;org.slf4j.Logger: void debug(java.lang.String)&gt;($stack13)"]
+
+		31350964 -> 2522868 -> 15607830 -> 30914495 -> 2686884 -> 11443029 -> 20272201 -> 24119573
+	}
+	24119573:s -> 22981361:n
+
+//  lines [143: 143] 
+	subgraph cluster_2292194 { 
+		label = "Block #3"
+		22981361[label="$stack5 = this.&lt;org.apache.activemq.util.RestFilter: java.lang.String readPermissionRole&gt;"]
+		3189168[label="if $stack5 == null"]
+
+		22981361 -> 3189168
+	}
+	3189168:s -> 23849340:n[label="false"]
+	3189168:s -> 16914057:n[label="true"]
+
+//  lines [143: 143] 
+	subgraph cluster_26114104 { 
+		label = "Block #4"
+		23849340[label="$stack6 = this.&lt;org.apache.activemq.util.RestFilter: java.lang.String readPermissionRole&gt;"]
+		18446918[label="$stack7 = interfaceinvoke request.&lt;javax.servlet.http.HttpServletRequest: boolean isUserInRole(java.lang.String)&gt;($stack6)"]
+		27695879[label="if $stack7 != 0"]
+
+		23849340 -> 18446918 -> 27695879
+	}
+	27695879:s -> 1247045:n[label="false"]
+	27695879:s -> 16914057:n[label="true"]
+
+//  lines [147: 147] 
+	subgraph cluster_3506367 { 
+		label = "Block #5"
+		16914057[label="return 1",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+//  lines [144: 145] 
+	subgraph cluster_13893352 { 
+		label = "Block #6"
+		1247045[label="interfaceinvoke response.&lt;javax.servlet.http.HttpServletResponse: void sendError(int)&gt;(403)"]
+		3021042[label="return 0",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		1247045 -> 3021042
+	}
+
+}

@@ -1,0 +1,29 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [21: 30] 
+	subgraph cluster_32031691 { 
+		label = "Block #1"
+		17194343[label="args := @parameter0: java.lang.String[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		21520346[label="$stack5 = staticinvoke &lt;java.lang.Thread: java.lang.Thread currentThread()&gt;()"]
+		2498190[label="stackTraceElements = virtualinvoke $stack5.&lt;java.lang.Thread: java.lang.StackTraceElement[] getStackTrace()&gt;()"]
+		26222256[label="$stack6 = lengthof stackTraceElements"]
+		31110379[label="$stack7 = $stack6 - 1"]
+		24345481[label="$stack8 = stackTraceElements[$stack7]"]
+		17054255[label="myClassName = virtualinvoke $stack8.&lt;java.lang.StackTraceElement: java.lang.String getClassName()&gt;()"]
+		31770514[label="myClass = staticinvoke &lt;java.lang.Class: java.lang.Class forName(java.lang.String)&gt;(myClassName)"]
+		6346473[label="$stack9 = virtualinvoke myClass.&lt;java.lang.Class: java.lang.Object newInstance()&gt;()"]
+		20224131[label="myObject = (testcasesupport.AbstractTestCaseBase) $stack9"]
+		19517906[label="virtualinvoke myObject.&lt;testcasesupport.AbstractTestCaseBase: void runTest(java.lang.String)&gt;(myClassName)"]
+		14845543[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		17194343 -> 21520346 -> 2498190 -> 26222256 -> 31110379 -> 24345481 -> 17054255 -> 31770514 -> 6346473 -> 20224131 -> 19517906 -> 14845543
+	}
+
+}

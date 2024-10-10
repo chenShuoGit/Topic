@@ -1,0 +1,24 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [41: 41] 
+	subgraph cluster_29529503 { 
+		label = "Block #1"
+		31100424[label="$stack0 = new java.lang.StringBuilder",shape=Mdiamond,color=grey50,fillcolor=white]
+		20420022[label="specialinvoke $stack0.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		22632649[label="$stack1 = staticinvoke &lt;org.apache.activemq.util.IOHelper: java.lang.String getDefaultDirectoryPrefix()&gt;()"]
+		30757018[label="$stack2 = virtualinvoke $stack0.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;($stack1)"]
+		15742082[label="$stack3 = virtualinvoke $stack2.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;amqstore&quot;)"]
+		27184720[label="$stack4 = virtualinvoke $stack3.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		16814244[label="return $stack4",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		31100424 -> 20420022 -> 22632649 -> 30757018 -> 15742082 -> 27184720 -> 16814244
+	}
+
+}

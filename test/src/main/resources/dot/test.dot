@@ -1,0 +1,26 @@
+digraph G {
+    compound=true
+    labelloc=b
+    style=filled
+    color=gray90
+    node [shape=box,style=filled,color=white]
+    edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+    fontsize=10
+
+    //  lines [10: 16]
+	subgraph cluster_1852584274 {
+    label = "Block #1"
+    727001376[label="this := @this: org.example.Example",shape=Mdiamond,color=grey50,fillcolor=white]
+    1033490990[label="a := @parameter0: int"]
+    561247961[label="b#0 = a + 1"]
+    813656972[label="b#1 = b#0 + 2"]
+    2104545713[label="b#2 = b#1 + 3"]
+    1182461167[label="b#3 = b#2 + 4"]
+    1039949752[label="b#4 = b#3 + 5"]
+    2116908859[label="b#5 = b#4 + 6"]
+    1297149880[label="return b#5",shape=Mdiamond,color=grey50,fillcolor=white]
+
+    727001376 -> 1033490990 -> 561247961 -> 813656972 -> 2104545713 -> 1182461167 -> 1039949752 -> 2116908859 -> 1297149880
+    }
+
+}

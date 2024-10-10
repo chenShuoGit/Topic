@@ -1,0 +1,24 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [57: 58] 
+	subgraph cluster_1032581 { 
+		label = "Block #1"
+		16008843[label="shortNumber := @parameter0: short",shape=Mdiamond,color=grey50,fillcolor=white]
+		4319906[label="$stack1 = newarray (java.lang.Object)[1]"]
+		27073049[label="$stack2 = staticinvoke &lt;java.lang.Short: java.lang.Short valueOf(short)&gt;(shortNumber)"]
+		8631303[label="$stack1[0] = $stack2"]
+		9690517[label="$stack3 = staticinvoke &lt;java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])&gt;(&quot;%02d&quot;, $stack1)"]
+		23211999[label="staticinvoke &lt;testcasesupport.IO: void writeLine(java.lang.String)&gt;($stack3)"]
+		18934701[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		16008843 -> 4319906 -> 27073049 -> 8631303 -> 9690517 -> 23211999 -> 18934701
+	}
+
+}

@@ -1,0 +1,21 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+	subgraph cluster_20375222 { 
+		label = "DataFlow"
+		31596604[label="request := @parameter0: javax.servlet.http.HttpServletRequest"]
+		27742284[label="destination = interfaceinvoke request.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getHeader(java.lang.String)&gt;(&quot;Destination&quot;)"]
+		31596604 -> 27742284
+		25300561[label="$stack9 = new java.net.URL"]
+		4443432[label="specialinvoke $stack9.&lt;java.net.URL: void &lt;init&gt;(java.lang.String)&gt;(destination)"]
+		25300561 -> 4443432
+		27742284 -> 4443432
+	}
+
+}

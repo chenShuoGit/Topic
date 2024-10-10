@@ -40,7 +40,7 @@ import sootup.core.signatures.MethodSignature;
 import sootup.core.types.ClassType;
 import sootup.core.types.Type;
 
-/*
+/**
  * Implementation of a Control Flow Graph which stores Stmts, each Trap- and Branching Information directly in its Blocks.
  *
  * This implementation builds the blocks directly after a manipulation operation is assigned - which may be not always necessary and could be delayed when needed e.g. in cases of multiple changes this could create more overhead than necessary.

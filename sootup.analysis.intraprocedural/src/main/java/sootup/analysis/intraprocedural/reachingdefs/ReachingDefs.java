@@ -41,9 +41,16 @@ public class ReachingDefs {
     ReachingDefsAnalysis analysis = new ReachingDefsAnalysis(graph);
 
     for (Stmt stmt : graph.getStmts()) {
+      // 该语句没有使用任何参数,跳过本次循环
       if (!stmt.getUses().findAny().isPresent()) continue;
 
+      // getFlowBefore(stmt) : 获取stmt的前向流集合(从函数入口点至stmt之间的语句，跳转语句和初始化语句不在内)
       Set<VariableDefinition> inset = analysis.getFlowBefore(stmt);
+
+//      // 测试-输出flowBefore
+//      System.out.println("---------\nstmt : " + stmt);
+//      inset.stream().filter(def -> def.getStmt().isPresent()).forEach(def -> System.out.println(def.getStmt()));
+
       reachingDefs.put(stmt, new ArrayList<>());
 
       for (VariableDefinition def : inset) {
@@ -56,7 +63,14 @@ public class ReachingDefs {
                     definedVar.equivTo(usedVar)
                         && definingStmt.isPresent()
                         && definingStmt.get() != stmt)
-            .forEach(usedVar -> reachingDefs.get(stmt).add(definingStmt.get()));
+            .forEach(usedVar -> {
+              // 确实是数据流分析，这里提取的是stmt中使用的数据的定义语句,在Jimple表示中，对一个数据进行处理后就变成另一个数据，可以根据这种特性进行数据溯源
+//              // 测试-输出过滤后的一些语句，这里可能是数据流分析
+//              System.out.println("---------\nstmt : " + stmt);
+//              System.out.println(definingStmt.get());
+              reachingDefs.get(stmt).add(definingStmt.get());
+            });
+
       }
     }
   }

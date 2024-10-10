@@ -1,0 +1,20 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [132: 133] 
+	subgraph cluster_10220624 { 
+		label = "Block #1"
+		21621179[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		14218570[label="specialinvoke this.&lt;testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31: void goodG2B()&gt;()"]
+		18677952[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		21621179 -> 14218570 -> 18677952
+	}
+
+}
