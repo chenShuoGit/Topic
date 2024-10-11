@@ -1,0 +1,154 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [133: 135] 
+	subgraph cluster_1413378318 { 
+		label = "Block #1"
+		929776179[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		1157058691[label="data := @parameter0: java.lang.String"]
+		1264413185[label="socket = null"]
+		200224114[label="readerBuffered = null"]
+		2095303566[label="readerInputStream = null"]
+
+		929776179 -> 1157058691 -> 1264413185 -> 200224114 -> 2095303566
+	}
+	2095303566:s -> 1030228826:n
+
+//  lines [140: 144] 
+	subgraph cluster_494586676 { 
+		label = "Block #2"
+		1030228826[label="$stack8 = new java.net.Socket"]
+		199640888[label="specialinvoke $stack8.&lt;java.net.Socket: void &lt;init&gt;(java.lang.String,int)&gt;(&quot;host.example.org&quot;, 39544)"]
+		1243806178[label="socket = $stack8"]
+		2129221032[label="$stack10 = new java.io.InputStreamReader"]
+		77269878[label="$stack9 = virtualinvoke $stack8.&lt;java.net.Socket: java.io.InputStream getInputStream()&gt;()"]
+		1791045777[label="#l2 = (java.io.InputStreamReader) $stack10"]
+
+		1030228826 -> 199640888 -> 1243806178 -> 2129221032 -> 77269878 -> 1791045777
+	}
+	1791045777:s -> 889486595:n
+	//exceptional edges 
+	1791045777:e -> 1794717576:n [label="	java.io.IOException"color=red,ltail="cluster_494586676"]
+	1791045777:e -> 1219161283:n [label="	java.lang.Throwable"color=red,ltail="cluster_494586676"]
+
+//  lines [144: 145] 
+	subgraph cluster_306980751 { 
+		label = "Block #3"
+		889486595[label="specialinvoke #l2.&lt;java.io.InputStreamReader: void &lt;init&gt;(java.io.InputStream,java.lang.String)&gt;($stack9, &quot;UTF-8&quot;)"]
+		283717519[label="readerInputStream = (java.io.InputStreamReader) $stack10"]
+		1990098664[label="$stack11 = new java.io.BufferedReader"]
+		1472465[label="#l0 = (java.io.Reader) $stack10"]
+
+		889486595 -> 283717519 -> 1990098664 -> 1472465
+	}
+	1472465:s -> 1686100174:n
+
+//  lines [145: 148] 
+	subgraph cluster_343856911 { 
+		label = "Block #4"
+		1686100174[label="specialinvoke $stack11.&lt;java.io.BufferedReader: void &lt;init&gt;(java.io.Reader)&gt;(#l0)"]
+		1773283386[label="readerBuffered = $stack11"]
+		313540687[label="data = virtualinvoke $stack11.&lt;java.io.BufferedReader: java.lang.String readLine()&gt;()"]
+
+		1686100174 -> 1773283386 -> 313540687
+	}
+	313540687:s -> 1457410641:n
+
+//  lines [159: 159] 
+	subgraph cluster_611563982 { 
+		label = "Block #5"
+		1457410641[label="if $stack11 == null"]
+	}
+	1457410641:s -> 373182087:n[label="false"]
+	1457410641:s -> 1071097621:n[label="true"]
+	//exceptional edges 
+	1457410641:e -> 1877453512:n [label="	java.io.IOException"color=red,ltail="cluster_611563982"]
+
+//  lines [161: 161] 
+	subgraph cluster_336484883 { 
+		label = "Block #6"
+		373182087[label="virtualinvoke $stack11.&lt;java.io.BufferedReader: void close()&gt;()"]
+	}
+	373182087:s -> 1071097621:n
+	//exceptional edges 
+	373182087:e -> 1877453512:n [label="	java.io.IOException"color=red,ltail="cluster_336484883"]
+
+//  lines [167: 167] 
+	subgraph cluster_876213901 { 
+		label = "Block #7"
+		1071097621[label="goto"]
+	}
+	1071097621:s -> 2085002312:n
+
+//  lines [171: 171] 
+	subgraph cluster_233021551 { 
+		label = "Block #8"
+		2085002312[label="if $stack10 == null"]
+	}
+	2085002312:s -> 1580297332:n[label="false"]
+	2085002312:s -> 762227630:n[label="true"]
+	//exceptional edges 
+	2085002312:e -> 910091170:n [label="	java.io.IOException"color=red,ltail="cluster_233021551"]
+
+//  lines [173: 173] 
+	subgraph cluster_102617125 { 
+		label = "Block #9"
+		1580297332[label="#l3 = (java.io.InputStreamReader) $stack10"]
+	}
+	1580297332:s -> 1769193365:n
+
+//  lines [173: 173] 
+	subgraph cluster_736778932 { 
+		label = "Block #10"
+		1769193365[label="virtualinvoke #l3.&lt;java.io.InputStreamReader: void close()&gt;()"]
+	}
+	1769193365:s -> 762227630:n
+	//exceptional edges 
+	1769193365:e -> 910091170:n [label="	java.io.IOException"color=red,ltail="cluster_736778932"]
+
+//  lines [179: 179] 
+	subgraph cluster_1032000752 { 
+		label = "Block #11"
+		762227630[label="goto"]
+	}
+	762227630:s -> 117009527:n
+
+//  lines [184: 184] 
+	subgraph cluster_1004095028 { 
+		label = "Block #12"
+		117009527[label="if $stack8 == null"]
+	}
+	117009527:s -> 1000975683:n[label="false"]
+	117009527:s -> 1454031203:n[label="true"]
+	//exceptional edges 
+	117009527:e -> 345902941:n [label="	java.io.IOException"color=red,ltail="cluster_1004095028"]
+
+//  lines [186: 186] 
+	subgraph cluster_1948863195 { 
+		label = "Block #13"
+		1000975683[label="virtualinvoke $stack8.&lt;java.net.Socket: void close()&gt;()"]
+	}
+	1000975683:s -> 1454031203:n
+	//exceptional edges 
+	1000975683:e -> 345902941:n [label="	java.io.IOException"color=red,ltail="cluster_1948863195"]
+
+//  lines [192: 192] 
+	subgraph cluster_1890187342 { 
+		label = "Block #14"
+		1454031203[label="goto"]
+	}
+	1454031203:s -> 275310919:n
+
+//  lines [195: 195] 
+	subgraph cluster_326298949 { 
+		label = "Block #15"
+		275310919[label="return data",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}

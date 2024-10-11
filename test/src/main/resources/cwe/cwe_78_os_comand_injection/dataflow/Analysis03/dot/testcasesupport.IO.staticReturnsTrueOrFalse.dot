@@ -1,0 +1,21 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [100: 100] 
+	subgraph cluster_1603177117 { 
+		label = "Block #1"
+		1439394198[label="$stack0 = new java.util.Random",shape=Mdiamond,color=grey50,fillcolor=white]
+		1222768327[label="specialinvoke $stack0.&lt;java.util.Random: void &lt;init&gt;()&gt;()"]
+		403170294[label="$stack1 = virtualinvoke $stack0.&lt;java.util.Random: boolean nextBoolean()&gt;()"]
+		1193471756[label="return $stack1",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		1439394198 -> 1222768327 -> 403170294 -> 1193471756
+	}
+
+}

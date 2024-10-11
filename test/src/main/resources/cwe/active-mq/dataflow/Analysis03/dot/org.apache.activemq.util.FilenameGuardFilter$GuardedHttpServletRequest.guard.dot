@@ -1,0 +1,50 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [63: 64] 
+	subgraph cluster_20049680 { 
+		label = "Block #1"
+		2079179914[label="this := @this: org.apache.activemq.util.FilenameGuardFilter$GuardedHttpServletRequest",shape=Mdiamond,color=grey50,fillcolor=white]
+		1437654187[label="filename := @parameter0: java.lang.String"]
+		510063093[label="#l1 = (java.lang.CharSequence) &quot;_&quot;"]
+		1606304070[label="#l0 = (java.lang.CharSequence) &quot;:&quot;"]
+		1911152052[label="guarded = virtualinvoke filename.&lt;java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)&gt;(#l0, #l1)"]
+		1525409936[label="$stack3 = staticinvoke &lt;org.apache.activemq.util.FilenameGuardFilter: org.slf4j.Logger access$000()&gt;()"]
+		1536471117[label="$stack4 = interfaceinvoke $stack3.&lt;org.slf4j.Logger: boolean isDebugEnabled()&gt;()"]
+		9190301[label="if $stack4 == 0"]
+
+		2079179914 -> 1437654187 -> 510063093 -> 1606304070 -> 1911152052 -> 1525409936 -> 1536471117 -> 9190301
+	}
+	9190301:s -> 1781493632:n[label="false"]
+	9190301:s -> 1231156911:n[label="true"]
+
+//  lines [65: 65] 
+	subgraph cluster_2151717 { 
+		label = "Block #2"
+		1781493632[label="$stack11 = staticinvoke &lt;org.apache.activemq.util.FilenameGuardFilter: org.slf4j.Logger access$000()&gt;()"]
+		966544353[label="$stack5 = new java.lang.StringBuilder"]
+		945722724[label="specialinvoke $stack5.&lt;java.lang.StringBuilder: void &lt;init&gt;()&gt;()"]
+		504858437[label="$stack6 = virtualinvoke $stack5.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;guarded &quot;)"]
+		422330142[label="$stack7 = virtualinvoke $stack6.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(filename)"]
+		525968792[label="$stack8 = virtualinvoke $stack7.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot; to &quot;)"]
+		294658058[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(guarded)"]
+		1278852808[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		63390[label="interfaceinvoke $stack11.&lt;org.slf4j.Logger: void debug(java.lang.String)&gt;($stack10)"]
+
+		1781493632 -> 966544353 -> 945722724 -> 504858437 -> 422330142 -> 525968792 -> 294658058 -> 1278852808 -> 63390
+	}
+	63390:s -> 1231156911:n
+
+//  lines [67: 67] 
+	subgraph cluster_1484673893 { 
+		label = "Block #3"
+		1231156911[label="return guarded",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}

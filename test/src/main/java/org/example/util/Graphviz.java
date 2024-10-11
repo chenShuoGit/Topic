@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Graphviz {
     public static void dotToPng(String dot, String path, String fileName) {
-        System.out.println("-----# Graphviz start #-----");
+//        System.out.println("-----# Graphviz start #-----");
         String dotDirPath = path + "\\dot";
         String pngDirPath = path + "\\png";
         File dotDir = new File(dotDirPath);
@@ -23,7 +23,7 @@ public class Graphviz {
         try {
             File dotFile = new File(dotFilePath);
             if (dotFile.exists()) {
-                System.out.println("dot file already exists!");
+//                System.out.println("dot file already exists!");
                 return;
             }
             // 存储dot文件
@@ -35,7 +35,7 @@ public class Graphviz {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            System.out.println("-----# Graphviz end #-----");
+//            System.out.println("-----# Graphviz end #-----");
         }
     }
 
@@ -49,20 +49,28 @@ public class Graphviz {
                         "\tedge [fontsize=10,arrowsize=1.5,fontcolor=grey40]\n" +
                         "\tfontsize=10\n" +
                         "\n" +
-                        "\tsubgraph cluster_20375222 { \n" +
+                        "\tsubgraph cluster_775081157 { \n" +
                         "\t\tlabel = \"DataFlow\"\n" +
-                        "\t\t31596604[label=\"request := @parameter0: javax.servlet.http.HttpServletRequest\"]\n" +
-                        "\t\t27742284[label=\"destination = interfaceinvoke request.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getHeader(java.lang.String)&gt;(&quot;Destination&quot;)\"]\n" +
-                        "\t\t31596604 -> 27742284\n" +
-                        "\t\t25300561[label=\"$stack9 = new java.net.URL\"]\n" +
-                        "\t\t4443432[label=\"specialinvoke $stack9.&lt;java.net.URL: void &lt;init&gt;(java.lang.String)&gt;(destination)\"]\n" +
-                        "\t\t25300561 -> 4443432\n" +
-                        "\t\t27742284 -> 4443432\n" +
+                        "\t\t718187988[label=\"osCommand = &quot;/bin/ls &quot;\"]\n" +
+                        "\t\t615438348[label=\"osCommand = &quot;c:\\\\WINDOWS\\\\SYSTEM32\\\\cmd.exe /c dir &quot;\"]\n" +
+                        "\t\t664792509[label=\"$stack8 = new java.lang.StringBuilder\"]\n" +
+                        "\t\t1965237677[label=\"$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(osCommand)\"]\n" +
+                        "\t\t664792509 -> 1965237677\n" +
+                        "\t\t615438348 -> 1965237677\n" +
+                        "\t\t718187988 -> 1965237677\n" +
+                        "\t\t710708543[label=\"$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;foo&quot;)\"]\n" +
+                        "\t\t1965237677 -> 710708543\n" +
+                        "\t\t2056031695[label=\"$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()\"]\n" +
+                        "\t\t710708543 -> 2056031695\n" +
+                        "\t\t484589713[label=\"$stack12 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()\"]\n" +
+                        "\t\t16503286[label=\"process = virtualinvoke $stack12.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack11)\"]\n" +
+                        "\t\t484589713 -> 16503286\n" +
+                        "\t\t2056031695 -> 16503286\n" +
                         "\t}\n" +
                         "\n" +
                         "}",
-                "D:\\Project\\Java\\SootUp\\test\\src\\main\\resources\\cwe\\active-mq\\dataflow\\Analysis02\\Graphviz",
-                "domove");
+                "D:\\Project\\Java\\Topic\\test\\src\\main\\resources\\cwe\\cwe_78_os_comand_injection\\dataflow\\Analysis03\\Graphviz",
+                "goodG2B");
     }
 
 }

@@ -1,0 +1,19 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [34: 34] 
+	subgraph cluster_111374580 { 
+		label = "Block #1"
+		27084827[label="$stack0 = &lt;org.apache.activemq.util.FilenameGuardFilter: org.slf4j.Logger LOG&gt;",shape=Mdiamond,color=grey50,fillcolor=white]
+		1374754488[label="return $stack0",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		27084827 -> 1374754488
+	}
+
+}

@@ -2,6 +2,7 @@ package org.example.cwe.cwe_78_os_comand_injection.dataflow.analysis;
 
 
 import org.example.model.SensitiveStmtOfMethodSignature;
+import org.example.util.CFGUtil;
 import org.example.util.Graphviz;
 import sootup.analysis.intraprocedural.reachingdefs.ReachingDefs;
 import sootup.core.graph.BasicBlock;
@@ -27,17 +28,17 @@ import java.util.stream.Collectors;
 
 /**
  * @Author chenshuo
- * @Date 2024/9/25 11：26
- * @Description: CWE-78 操作系统命令挟持 漏洞分析 跨函数的数据流分析
+ * @Date 2024/10/10
+ * @Description: 静态分析，尝试实现论文中的路径筛选
  */
-public class Analysis02 {
+public class Analysis03 {
 
     public String classesPath;
     public String targetPath;
     public Deque<MethodSignature> sensitiveMethodDeque = new ArrayDeque<>();
     public List<MethodSignature> nextSensitiveMethodList = new ArrayList<>();
 
-    Analysis02(String classesPath, String targetPath, List<MethodSignature> sensitiveMethodList) {
+    Analysis03(String classesPath, String targetPath, List<MethodSignature> sensitiveMethodList) {
         this.classesPath = classesPath;
         this.targetPath = targetPath;
         sensitiveMethodList.forEach(method -> {
@@ -60,70 +61,44 @@ public class Analysis02 {
                 Optional<JavaSootMethod> method = view.getMethod(methodSignature);
                 if (method.isPresent()) {
                     JavaSootMethod sootMethod = method.get();
+                    System.out.println("当前处理方法：" + sootMethod.getName());
+                    // 获取方法的控制流图
                     StmtGraph<?> stmtGraph = sootMethod.getBody().getStmtGraph();
-                    // 前向数据流分析-由于stmtGraph是方法内的，因此这里只能是得到方法内部的数据流向.
-                    TreeNode<Stmt> dataflowTreeNode = getDataflowTreeNode(stmtGraph, stmt);
-                    // 数据流可视化
-                    String dataFlowDot = DotExporter.buildDataFlowGraphByTreeNode(dataflowTreeNode);
-                    System.out.println(dataFlowDot);
-                    // 数据流剪枝处理
-                    cutting(dataflowTreeNode);
-//                    nextSensitiveMethodList.forEach(nextMethod -> {
-////                        sensitiveMethodDeque.push(nextMethod);
-//                        System.out.println(nextMethod);
-//                    });
-                }
-            }
-        }
-    }
+                    // 获取路径-->全部的执行路径
+                    List<List<Stmt>> allPaths = CFGUtil.findAllPaths(stmtGraph);
+                    // 路径筛选-->获取具有敏感信息的路径
+                    List<List<Stmt>> sensitivePaths = CFGUtil.pathFilter(allPaths, stmt);
+                    System.out.println("敏感路径:");
+                    sensitivePaths.forEach(System.out::println);
+                    // 对敏感路径做数据流分析处理
+                    System.out.println("列表结构表示数据流:");
+                    CFGUtil.getDataflowToList(stmtGraph, stmt).forEach(stmt1 -> {
+                        System.out.println("当前分析的stmt:" + stmt1);
+                        if (stmt1.isInvokableStmt()) {
+                            InvokableStmt invokableStmt = stmt1.asInvokableStmt();
+                            invokableStmt.getInvokeExpr().ifPresent(System.out::println);
+                        }
+                    });
+                    TreeNode<Stmt> dataflowToTree = CFGUtil.getDataflowToTree(stmtGraph, stmt);
+                    System.out.println("树结构表示数据流:");
+                    String treeDataFlow = DotExporter.buildDataFlowGraphByTreeNode(dataflowToTree);
+                    System.out.println(treeDataFlow);
+                    // 这里的想法是从总的数据流图中挑选出包含的，然后将这些包含的进行匹配，匹配到了就说明符合我们的约束
+                    // TODO 写一个方法，在数据流信息的各个Stmt中，区分出所有的类型，目前初步可以分为以下几类：
+                    //  1. 硬编码
+                    //  2. 函数调用(java本地包内)
+                    //  3. 函数调用(同一个类的另一个方法)
+                    //  4. 函数调用(其它类型)
 
-    /**
-     * 此方法输出对应语句(stmt)在方法(stmtGraph)内的数据流(使用二叉树表示)
-     * @param stmtGraph 方法的stmtGraph
-     * @param stmt 语句
-     * @return 二叉树表示的数据流
-     */
-    public TreeNode<Stmt> getDataflowTreeNode(StmtGraph<?> stmtGraph, Stmt stmt) {
-        ReachingDefs reachingDefs = new ReachingDefs(stmtGraph);
-        Map<Stmt, List<Stmt>> reachingDefsMap = reachingDefs.getReachingDefs();
-        List<Stmt> stmtList = reachingDefsMap.get(stmt);
-        // 遍历查找调用链-使用二叉树结构来表示调用链
-        TreeNode<Stmt> root = new TreeNode<>();
-        BuildTreeHelper<Stmt> startEntry = new BuildTreeHelper<>(root, new AbstractMap.SimpleEntry<>(stmt, stmtList));
-        Deque<BuildTreeHelper<Stmt>> workList = new ArrayDeque<>();
-        workList.push(startEntry);
-        while (!workList.isEmpty()) {
-            BuildTreeHelper<Stmt> pop = workList.pop();
-            TreeNode<Stmt> treeNode = pop.getTreeNode();
-            Map.Entry<Stmt, List<Stmt>> stmtEntry = pop.getStmtEntry();
-            Stmt key = stmtEntry.getKey();
-            treeNode.setData(key);
-            List<Stmt> value = stmtEntry.getValue();
-            for (int i = 0; i < value.size(); i++) {
-                BuildTreeHelper<Stmt> node = null;
-                Stmt data = value.get(i);
-                List<Stmt> dataList = reachingDefsMap.get(data);
-                // 增加第一个孩子节点
-                if (Objects.isNull(treeNode.getFirstChild())) {
-                    TreeNode<Stmt> firstChild = new TreeNode<>();
-                    firstChild.setData(data);
-                    treeNode.setFirstChild(firstChild);
-                    node = new BuildTreeHelper<>(firstChild, new AbstractMap.SimpleEntry<>(data, dataList));
-                    workList.push(node);
-                    continue;
+                    // TODO 写一个方法，获取anatherMethod这个方法的返回值的数据流信息
+
+                    // TODO 确定数据流终止的条件(在跨函数条件下)
+                    //  1. 不能是函数调用-->发现是函数调用，进行下一次数据流分析，敏感语句为return语句，循环分析知道
+
+                    // TODO 找到完整的数据流向，判断数据是否通过了我们的约束，如HttpHeader等
                 }
-                TreeNode<Stmt> firstChild = treeNode.getFirstChild();
-                TreeNode<Stmt> child = firstChild;
-                while (!Objects.isNull(child.getBrother())) {
-                    child = firstChild.getBrother();
-                }
-                TreeNode<Stmt> brother = new TreeNode<>(data);
-                child.setBrother(brother);
-                node = new BuildTreeHelper<>(brother, new AbstractMap.SimpleEntry<>(data, dataList));
-                workList.push(node);
             }
         }
-        return root;
     }
 
 
@@ -163,12 +138,12 @@ public class Analysis02 {
         List<SensitiveStmtOfMethodSignature> resultList = new ArrayList<>();
         for (JavaSootClass item : classes) {
             String className = item.getName();
-            System.out.println("--------------------# 开始类分析：" + className + " #--------------------");
+//            System.out.println("--------------------# 开始类分析：" + className + " #--------------------");
             // 进行方法分析
             Set<JavaSootMethod> methodSet = item.getMethods();
             for (JavaSootMethod method : methodSet) {
                 String methodName = method.getName();
-                System.out.println("----------# 开始方法分析：" + methodName + " #----------");
+//                System.out.println("----------# 开始方法分析：" + methodName + " #----------");
                 if (method.isAbstract() || method.isNative()) {
                     System.out.println(methodName + " is abstract or native, without method body!");
                     continue;
@@ -182,7 +157,7 @@ public class Analysis02 {
                 // 进行语句分析-数据流分析-针对execMethodSignature
                 List<? extends BasicBlock<?>> blocksSorted = stmtGraph.getBlocksSorted();
                 for (int i = 0; i < blocksSorted.size(); ++i) {
-                    System.out.println("-----# " + "block: " + (i+1) + " #-----");
+//                    System.out.println("-----# " + "block: " + (i+1) + " #-----");
                     List<Stmt> stmts = blocksSorted.get(i).getStmts();
                     for (Stmt stmt : stmts) {
                         if (stmt.isInvokableStmt()) {
@@ -198,9 +173,9 @@ public class Analysis02 {
                         }
                     }
                 }
-                System.out.println("----------# 方法分析结束：" + methodName + " #----------");
+//                System.out.println("----------# 方法分析结束：" + methodName + " #----------");
             }
-            System.out.println("--------------------# 类分析结束：" + className + " #--------------------\n");
+//            System.out.println("--------------------# 类分析结束：" + className + " #--------------------\n");
         }
         return resultList;
     }
@@ -209,31 +184,17 @@ public class Analysis02 {
     public static void main(String[] args) {
 
         String classesPath =
-                "D:\\Project\\Java\\SootUp\\test\\src\\main\\resources\\activemq-fileserver";
+                "C:\\Users\\yeyan\\Desktop\\topic\\漏洞分析\\2017-11-02-juliet-java-v1-3\\144554-v1.0.0\\target\\classes";
         String targetPath =
-                "D:\\Project\\Java\\SootUp\\test\\src\\main\\resources\\cwe\\active-mq\\dataflow\\Analysis02";
+                "D:\\Project\\Java\\Topic\\test\\src\\main\\resources\\cwe\\cwe_78_os_comand_injection\\dataflow\\Analysis03";
         MethodSignature sensitiveMethod = new MethodSignature(
-                new JavaClassType("URL", new PackageName("java.net")),
-                "<init>",
+                new JavaClassType("Runtime", new PackageName("java.lang")),
+                "exec",
                 Collections.singletonList(new JavaClassType("String", new PackageName("java.lang"))),
-                VoidType.getInstance()
+                new JavaClassType("Process", new PackageName("java.lang"))
         );
-//        MethodSignature sensitiveMethod = new MethodSignature(
-//                new JavaClassType(
-//                        "CWE78_OS_Command_Injection__connect_tcp_31",
-//                        new PackageName("testcases.CWE78_OS_Command_Injection")),
-//                "anatherMethod",
-//                Collections.singletonList(
-//                        new JavaClassType(
-//                                "String",
-//                                new PackageName("java.lang")
-//                        )
-//                ),
-//                new JavaClassType(
-//                        "String",
-//                        new PackageName("java.lang"))
-//        );
-        Analysis02 analysis01 = new Analysis02(classesPath, targetPath, Collections.singletonList(sensitiveMethod));
+
+        Analysis03 analysis01 = new Analysis03(classesPath, targetPath, Collections.singletonList(sensitiveMethod));
         analysis01.doAnalysis();
 
     }

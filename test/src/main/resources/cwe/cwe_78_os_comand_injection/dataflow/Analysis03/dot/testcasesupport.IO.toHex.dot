@@ -1,0 +1,79 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [107: 110] 
+	subgraph cluster_1204481453 { 
+		label = "Block #1"
+		993370665[label="byteBuffer := @parameter0: byte[]",shape=Mdiamond,color=grey50,fillcolor=white]
+		131872530[label="$stack5 = new java.lang.StringBuffer"]
+		257459516[label="$stack3 = lengthof byteBuffer"]
+		1236444285[label="$stack4 = $stack3 * 2"]
+		800088638[label="specialinvoke $stack5.&lt;java.lang.StringBuffer: void &lt;init&gt;(int)&gt;($stack4)"]
+		504807594[label="strBuffer = $stack5"]
+		106999035[label="i = 0"]
+
+		993370665 -> 131872530 -> 257459516 -> 1236444285 -> 800088638 -> 504807594 -> 106999035
+	}
+	106999035:s -> 823914581:n
+
+//  lines [110: 110] 
+	subgraph cluster_530486389 { 
+		label = "Block #2"
+		823914581[label="$stack6 = lengthof byteBuffer"]
+		1834361038[label="if i &gt;= $stack6"]
+
+		823914581 -> 1834361038
+	}
+	1834361038:s -> 304354378:n[label="false"]
+	1834361038:s -> 1096485705:n[label="true"]
+
+//  lines [120: 120] 
+	subgraph cluster_1651162064 { 
+		label = "Block #3"
+		1096485705[label="$stack7 = virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.String toString()&gt;()"]
+		1541525668[label="return $stack7",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		1096485705 -> 1541525668
+	}
+
+//  lines [112: 112] 
+	subgraph cluster_1383519982 { 
+		label = "Block #4"
+		304354378[label="$stack8 = byteBuffer[i]"]
+		1848289347[label="$stack9 = $stack8 &amp; 255"]
+		1777238524[label="if $stack9 &gt;= 16"]
+
+		304354378 -> 1848289347 -> 1777238524
+	}
+	1777238524:s -> 98826337:n[label="false"]
+	1777238524:s -> 1880078449:n[label="true"]
+
+//  lines [114: 114] 
+	subgraph cluster_462526099 { 
+		label = "Block #5"
+		98826337[label="virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)&gt;(&quot;0&quot;)"]
+	}
+	98826337:s -> 1880078449:n
+
+//  lines [117: 110] 
+	subgraph cluster_1304589447 { 
+		label = "Block #6"
+		1880078449[label="$stack10 = byteBuffer[i]"]
+		1237912220[label="$stack11 = $stack10 &amp; 255"]
+		530539368[label="$stack12 = (long) $stack11"]
+		479920916[label="$stack13 = staticinvoke &lt;java.lang.Long: java.lang.String toString(long,int)&gt;($stack12, 16)"]
+		90567568[label="virtualinvoke $stack5.&lt;java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)&gt;($stack13)"]
+		502848122[label="i = i + 1"]
+		159290353[label="goto"]
+
+		1880078449 -> 1237912220 -> 530539368 -> 479920916 -> 90567568 -> 502848122 -> 159290353
+	}
+	159290353:e -> 823914581:n
+
+}

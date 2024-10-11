@@ -1,0 +1,21 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [59: 60] 
+	subgraph cluster_1026055550 { 
+		label = "Block #1"
+		807752428[label="this := @this: org.apache.activemq.util.FilenameGuardFilter$GuardedHttpServletRequest",shape=Mdiamond,color=grey50,fillcolor=white]
+		1073763441[label="httpRequest := @parameter0: javax.servlet.http.HttpServletRequest"]
+		752316209[label="specialinvoke this.&lt;javax.servlet.http.HttpServletRequestWrapper: void &lt;init&gt;(javax.servlet.http.HttpServletRequest)&gt;(httpRequest)"]
+		1229161065[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		807752428 -> 1073763441 -> 752316209 -> 1229161065
+	}
+
+}

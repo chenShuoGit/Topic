@@ -1,0 +1,49 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [58: 58] 
+	subgraph cluster_2065857933 { 
+		label = "Block #1"
+		1277009227[label="fileToDelete := @parameter0: java.io.File",shape=Mdiamond,color=grey50,fillcolor=white]
+		1989335500[label="if fileToDelete == null"]
+
+		1277009227 -> 1989335500
+	}
+	1989335500:s -> 1797712197:n[label="false"]
+	1989335500:s -> 225472281:n[label="true"]
+
+//  lines [58: 58] 
+	subgraph cluster_1708570683 { 
+		label = "Block #2"
+		1797712197[label="$stack2 = virtualinvoke fileToDelete.&lt;java.io.File: boolean exists()&gt;()"]
+		1307904972[label="if $stack2 != 0"]
+
+		1797712197 -> 1307904972
+	}
+	1307904972:s -> 225472281:n[label="false"]
+	1307904972:s -> 1671846437:n[label="true"]
+
+//  lines [61: 63] 
+	subgraph cluster_690521419 { 
+		label = "Block #3"
+		1671846437[label="result#0 = staticinvoke &lt;org.apache.activemq.util.IOHelper: boolean deleteChildren(java.io.File)&gt;(fileToDelete)"]
+		1169794610[label="$stack3 = virtualinvoke fileToDelete.&lt;java.io.File: boolean delete()&gt;()"]
+		1840976765[label="result#1 = result#0 &amp; $stack3"]
+		831236296[label="return result#1",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		1671846437 -> 1169794610 -> 1840976765 -> 831236296
+	}
+
+//  lines [59: 59] 
+	subgraph cluster_817348612 { 
+		label = "Block #4"
+		225472281[label="return 1",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}

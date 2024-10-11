@@ -1,0 +1,29 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+	subgraph cluster_775081157 { 
+		label = "DataFlow"
+		718187988[label="osCommand = &quot;/bin/ls &quot;"]
+		615438348[label="osCommand = &quot;c:\\WINDOWS\\SYSTEM32\\cmd.exe /c dir &quot;"]
+		664792509[label="$stack8 = new java.lang.StringBuilder"]
+		1965237677[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(osCommand)"]
+		664792509 -> 1965237677
+		615438348 -> 1965237677
+		718187988 -> 1965237677
+		710708543[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(&quot;foo&quot;)"]
+		1965237677 -> 710708543
+		2056031695[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		710708543 -> 2056031695
+		484589713[label="$stack12 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()"]
+		16503286[label="process = virtualinvoke $stack12.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack11)"]
+		484589713 -> 16503286
+		2056031695 -> 16503286
+	}
+
+}

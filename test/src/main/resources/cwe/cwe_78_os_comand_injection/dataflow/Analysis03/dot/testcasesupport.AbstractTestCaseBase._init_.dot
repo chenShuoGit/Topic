@@ -1,0 +1,20 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [9: 9] 
+	subgraph cluster_1346343363 { 
+		label = "Block #1"
+		1889057031[label="this := @this: testcasesupport.AbstractTestCaseBase",shape=Mdiamond,color=grey50,fillcolor=white]
+		324169305[label="specialinvoke this.&lt;java.lang.Object: void &lt;init&gt;()&gt;()"]
+		391135083[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		1889057031 -> 324169305 -> 391135083
+	}
+
+}

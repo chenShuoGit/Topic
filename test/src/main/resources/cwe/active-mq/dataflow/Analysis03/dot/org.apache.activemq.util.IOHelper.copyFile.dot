@@ -1,0 +1,31 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [102: 105] 
+	subgraph cluster_918312414 { 
+		label = "Block #1"
+		294247762[label="src := @parameter0: java.io.File",shape=Mdiamond,color=grey50,fillcolor=white]
+		1448061896[label="dest := @parameter1: java.io.File"]
+		319644606[label="$stack4 = new java.io.FileInputStream"]
+		1827725498[label="#l3 = (java.io.FileInputStream) $stack4"]
+		1740797075[label="specialinvoke #l3.&lt;java.io.FileInputStream: void &lt;init&gt;(java.io.File)&gt;(src)"]
+		131635550[label="fileSrc = (java.io.FileInputStream) $stack4"]
+		1427651360[label="$stack5 = new java.io.FileOutputStream"]
+		29183965[label="#l2 = (java.io.FileOutputStream) $stack5"]
+		1922464006[label="specialinvoke #l2.&lt;java.io.FileOutputStream: void &lt;init&gt;(java.io.File)&gt;(dest)"]
+		1118078504[label="fileDest = (java.io.FileOutputStream) $stack5"]
+		1334042472[label="#l0 = (java.io.InputStream) $stack4"]
+		904058452[label="#l1 = (java.io.OutputStream) $stack5"]
+		2012993836[label="staticinvoke &lt;org.apache.activemq.util.IOHelper: void copyInputStream(java.io.InputStream,java.io.OutputStream)&gt;(#l0, #l1)"]
+		320304382[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		294247762 -> 1448061896 -> 319644606 -> 1827725498 -> 1740797075 -> 131635550 -> 1427651360 -> 29183965 -> 1922464006 -> 1118078504 -> 1334042472 -> 904058452 -> 2012993836 -> 320304382
+	}
+
+}

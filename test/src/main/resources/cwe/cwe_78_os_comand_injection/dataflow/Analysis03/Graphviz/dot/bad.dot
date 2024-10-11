@@ -1,0 +1,33 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+	subgraph cluster_1122130699 { 
+		label = "DataFlow"
+		1546908073[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31"]
+		592983282[label="$stack8 = new java.lang.StringBuilder"]
+		447718425[label="osCommand = &quot;c:\\WINDOWS\\SYSTEM32\\cmd.exe /c dir &quot;"]
+		168907708[label="osCommand = &quot;/bin/ls &quot;"]
+		846254484[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(osCommand)"]
+		168907708 -> 846254484
+		447718425 -> 846254484
+		592983282 -> 846254484
+		1168019749[label="dataCopy = virtualinvoke this.&lt;testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31: java.lang.String anatherMethod(java.lang.String)&gt;(&quot;&quot;)"]
+		1546908073 -> 1168019749
+		1427381743[label="$stack10 = virtualinvoke $stack9.&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;(dataCopy)"]
+		1168019749 -> 1427381743
+		846254484 -> 1427381743
+		1280851663[label="$stack12 = staticinvoke &lt;java.lang.Runtime: java.lang.Runtime getRuntime()&gt;()"]
+		129153987[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.StringBuilder: java.lang.String toString()&gt;()"]
+		1427381743 -> 129153987
+		1764696127[label="process = virtualinvoke $stack12.&lt;java.lang.Runtime: java.lang.Process exec(java.lang.String)&gt;($stack11)"]
+		129153987 -> 1764696127
+		1280851663 -> 1764696127
+	}
+
+}

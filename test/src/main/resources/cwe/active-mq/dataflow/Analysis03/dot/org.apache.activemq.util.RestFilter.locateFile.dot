@@ -1,0 +1,27 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [72: 72] 
+	subgraph cluster_333040629 { 
+		label = "Block #1"
+		949684105[label="this := @this: org.apache.activemq.util.RestFilter",shape=Mdiamond,color=grey50,fillcolor=white]
+		1200470358[label="request := @parameter0: javax.servlet.http.HttpServletRequest"]
+		768192757[label="$stack7 = new java.io.File"]
+		429353573[label="$stack2 = this.&lt;org.apache.activemq.util.RestFilter: javax.servlet.FilterConfig filterConfig&gt;"]
+		1975873209[label="$stack4 = interfaceinvoke $stack2.&lt;javax.servlet.FilterConfig: javax.servlet.ServletContext getServletContext()&gt;()"]
+		1192923170[label="$stack3 = interfaceinvoke request.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getServletPath()&gt;()"]
+		996125997[label="$stack6 = interfaceinvoke $stack4.&lt;javax.servlet.ServletContext: java.lang.String getRealPath(java.lang.String)&gt;($stack3)"]
+		1261198850[label="$stack5 = interfaceinvoke request.&lt;javax.servlet.http.HttpServletRequest: java.lang.String getPathInfo()&gt;()"]
+		1578587450[label="specialinvoke $stack7.&lt;java.io.File: void &lt;init&gt;(java.lang.String,java.lang.String)&gt;($stack6, $stack5)"]
+		79438382[label="return $stack7",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		949684105 -> 1200470358 -> 768192757 -> 429353573 -> 1975873209 -> 1192923170 -> 996125997 -> 1261198850 -> 1578587450 -> 79438382
+	}
+
+}

@@ -1,0 +1,20 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [30: 30] 
+	subgraph cluster_306115458 { 
+		label = "Block #1"
+		257608164[label="this := @this: testcases.CWE78_OS_Command_Injection.CWE78_OS_Command_Injection__connect_tcp_31",shape=Mdiamond,color=grey50,fillcolor=white]
+		230643635[label="specialinvoke this.&lt;testcasesupport.AbstractTestCase: void &lt;init&gt;()&gt;()"]
+		1636182655[label="return",shape=Mdiamond,color=grey50,fillcolor=white]
+
+		257608164 -> 230643635 -> 1636182655
+	}
+
+}

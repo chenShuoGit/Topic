@@ -1,0 +1,169 @@
+digraph G {
+	compound=true
+	labelloc=b
+	style=filled
+	color=gray90
+	node [shape=box,style=filled,color=white]
+	edge [fontsize=10,arrowsize=1.5,fontcolor=grey40]
+	fontsize=10
+
+//  lines [67: 67] 
+	subgraph cluster_2141179775 { 
+		label = "Block #1"
+		1151755506[label="parent := @parameter0: java.io.File",shape=Mdiamond,color=grey50,fillcolor=white]
+		849373393[label="if parent == null"]
+
+		1151755506 -> 849373393
+	}
+	849373393:s -> 1702660825:n[label="false"]
+	849373393:s -> 364604394:n[label="true"]
+
+//  lines [67: 67] 
+	subgraph cluster_341748265 { 
+		label = "Block #2"
+		1702660825[label="$stack5 = virtualinvoke parent.&lt;java.io.File: boolean exists()&gt;()"]
+		1131040331[label="if $stack5 != 0"]
+
+		1702660825 -> 1131040331
+	}
+	1131040331:s -> 364604394:n[label="false"]
+	1131040331:s -> 1213349904:n[label="true"]
+
+//  lines [70: 71] 
+	subgraph cluster_1279309678 { 
+		label = "Block #3"
+		1213349904[label="result = 1"]
+		715521683[label="$stack6 = virtualinvoke parent.&lt;java.io.File: boolean isDirectory()&gt;()"]
+		992802731[label="if $stack6 == 0"]
+
+		1213349904 -> 715521683 -> 992802731
+	}
+	992802731:s -> 107241811:n[label="false"]
+	992802731:s -> 444920847:n[label="true"]
+
+//  lines [72: 73] 
+	subgraph cluster_1473611564 { 
+		label = "Block #4"
+		107241811[label="files = virtualinvoke parent.&lt;java.io.File: java.io.File[] listFiles()&gt;()"]
+		558922244[label="if files != null"]
+
+		107241811 -> 558922244
+	}
+	558922244:s -> 2032188048:n[label="false"]
+	558922244:s -> 1763344271:n[label="true"]
+
+//  lines [76: 76] 
+	subgraph cluster_1426329391 { 
+		label = "Block #5"
+		1763344271[label="i = 0"]
+	}
+	1763344271:s -> 254749889:n
+
+//  lines [76: 76] 
+	subgraph cluster_558187323 { 
+		label = "Block #6"
+		254749889[label="$stack7 = lengthof files"]
+		973576304[label="if i &gt;= $stack7"]
+
+		254749889 -> 973576304
+	}
+	973576304:s -> 2024918163:n[label="false"]
+	973576304:s -> 444920847:n[label="true"]
+
+//  lines [77: 78] 
+	subgraph cluster_1381965390 { 
+		label = "Block #7"
+		2024918163[label="file = files[i]"]
+		1197365356[label="$stack8 = virtualinvoke file.&lt;java.io.File: java.lang.String getName()&gt;()"]
+		1653986196[label="$stack9 = virtualinvoke $stack8.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;.&quot;)"]
+		1866161430[label="if $stack9 != 0"]
+
+		2024918163 -> 1197365356 -> 1653986196 -> 1866161430
+	}
+	1866161430:s -> 1436901839:n[label="false"]
+	1866161430:s -> 1353170030:n[label="true"]
+
+//  lines [78: 78] 
+	subgraph cluster_1564984895 { 
+		label = "Block #8"
+		1436901839[label="$stack10 = virtualinvoke file.&lt;java.io.File: java.lang.String getName()&gt;()"]
+		1054932644[label="$stack11 = virtualinvoke $stack10.&lt;java.lang.String: boolean equals(java.lang.Object)&gt;(&quot;..&quot;)"]
+		240166646[label="if $stack11 == 0"]
+
+		1436901839 -> 1054932644 -> 240166646
+	}
+	240166646:s -> 1335505684:n[label="false"]
+	240166646:s -> 112466394:n[label="true"]
+
+//  lines [82: 82] 
+	subgraph cluster_704024720 { 
+		label = "Block #9"
+		112466394[label="$stack12 = virtualinvoke file.&lt;java.io.File: boolean isDirectory()&gt;()"]
+		1405747618[label="if $stack12 == 0"]
+
+		112466394 -> 1405747618
+	}
+	1405747618:s -> 64133603:n[label="false"]
+	1405747618:s -> 1493625803:n[label="true"]
+
+//  lines [85: 85] 
+	subgraph cluster_1282287470 { 
+		label = "Block #10"
+		1493625803[label="$stack13 = virtualinvoke file.&lt;java.io.File: boolean delete()&gt;()"]
+		1259769769[label="result = result &amp; $stack13"]
+
+		1493625803 -> 1259769769
+	}
+	1259769769:s -> 1353170030:n
+
+//  lines [83: 83] 
+	subgraph cluster_211968962 { 
+		label = "Block #11"
+		64133603[label="$stack14 = staticinvoke &lt;org.apache.activemq.util.IOHelper: boolean deleteFile(java.io.File)&gt;(file)"]
+		589835301[label="result = result &amp; $stack14"]
+		1691538257[label="goto"]
+
+		64133603 -> 589835301 -> 1691538257
+	}
+	1691538257:s -> 1353170030:n
+
+//  lines [80: 80] 
+	subgraph cluster_1002191352 { 
+		label = "Block #12"
+		1335505684[label="goto"]
+	}
+	1335505684:s -> 1353170030:n
+
+//  lines [76: 76] 
+	subgraph cluster_889729797 { 
+		label = "Block #13"
+		1353170030[label="i = i + 1"]
+		1889248251[label="goto"]
+
+		1353170030 -> 1889248251
+	}
+	1889248251:e -> 254749889:n
+
+//  lines [74: 74] 
+	subgraph cluster_360067785 { 
+		label = "Block #14"
+		2032188048[label="result = 0"]
+		158453976[label="goto"]
+
+		2032188048 -> 158453976
+	}
+	158453976:s -> 444920847:n
+
+//  lines [91: 91] 
+	subgraph cluster_874217650 { 
+		label = "Block #15"
+		444920847[label="return result",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+//  lines [68: 68] 
+	subgraph cluster_146370526 { 
+		label = "Block #16"
+		364604394[label="return 0",shape=Mdiamond,color=grey50,fillcolor=white]
+	}
+
+}
