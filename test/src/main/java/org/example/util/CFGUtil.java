@@ -4,6 +4,8 @@ import sootup.analysis.intraprocedural.reachingdefs.ReachingDefs;
 import sootup.core.graph.BasicBlock;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.Stmt;
+import sootup.core.signatures.MethodSignature;
+import sootup.core.types.Type;
 import sootup.core.util.tree.BuildTreeHelper;
 import sootup.core.util.tree.TreeNode;
 
@@ -127,5 +129,21 @@ public class CFGUtil {
         return result;
     }
 
-
+    /**
+     * 得到CFG中所有的return语句
+     * @param stmtGraph
+     * @return
+     */
+    public static List<Stmt> getReturnStmtList(StmtGraph<?> stmtGraph) {
+        List<Stmt> returnStmtList = new ArrayList<>();
+        stmtGraph.getBlocks().forEach(block -> {
+            block.getStmts().forEach(stmt -> {
+                stmt.asInvokableStmt().getInvokeExpr().ifPresent(i -> {
+                    Type type = i.getType();
+                    System.out.println(type);
+                });
+            });
+        });
+        return returnStmtList;
+    }
 }

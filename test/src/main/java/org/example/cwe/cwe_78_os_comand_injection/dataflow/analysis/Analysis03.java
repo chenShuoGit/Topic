@@ -25,6 +25,7 @@ import sootup.java.core.views.JavaView;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author chenshuo
@@ -36,7 +37,7 @@ public class Analysis03 {
     public String classesPath;
     public String targetPath;
     public Deque<MethodSignature> sensitiveMethodDeque = new ArrayDeque<>();
-    public List<MethodSignature> nextSensitiveMethodList = new ArrayList<>();
+    public List<MethodSignature> allMethodSignatureInNativePackage = new ArrayList<>();
     public Map<MethodSignature, StmtGraph<?>> allCFGInNativePackage = new HashMap<>();
 
     Analysis03(String classesPath, String targetPath, List<MethodSignature> sensitiveMethodList) {
@@ -63,28 +64,7 @@ public class Analysis03 {
                 if (method.isPresent()) {
                     JavaSootMethod sootMethod = method.get();
                     System.out.println("当前处理方法：" + sootMethod.getName());
-                    // 获取方法的控制流图
-                    StmtGraph<?> stmtGraph = sootMethod.getBody().getStmtGraph();
-                    // 获取路径-->全部的执行路径
-                    List<List<Stmt>> allPaths = CFGUtil.findAllPaths(stmtGraph);
-                    // 路径筛选-->获取具有敏感信息的路径
-                    List<List<Stmt>> sensitivePaths = CFGUtil.pathFilter(allPaths, stmt);
-                    System.out.println("敏感路径:");
-                    sensitivePaths.forEach(System.out::println);
-                    // 对敏感路径做数据流分析处理
-                    System.out.println("列表结构表示数据流:");
-                    CFGUtil.getDataflowToList(stmtGraph, stmt).forEach(stmt1 -> {
-                        System.out.println("当前分析的stmt:" + stmt1);
-                        if (stmt1.isInvokableStmt()) {
-                            InvokableStmt invokableStmt = stmt1.asInvokableStmt();
-                            invokableStmt.getInvokeExpr().ifPresent(System.out::println);
-                        }
-                    });
-                    TreeNode<Stmt> dataflowToTree = CFGUtil.getDataflowToTree(stmtGraph, stmt);
-                    System.out.println("树结构表示数据流:");
-                    String treeDataFlow = DotExporter.buildDataFlowGraphByTreeNode(dataflowToTree);
-                    System.out.println(treeDataFlow);
-                    // 这里的想法是从总的数据流图中挑选出包含的，然后将这些包含的进行匹配，匹配到了就说明符合我们的约束
+                    recursiveAnalysis(methodSignature, stmt);
                     // TODO 写一个方法，在数据流信息的各个Stmt中，区分出所有的类型，目前初步可以分为以下几类：
                     //  1. 硬编码
                     //  2. 函数调用(java本地包内)
@@ -107,44 +87,45 @@ public class Analysis03 {
     public void recursiveAnalysis(MethodSignature methodSignature, Stmt stmt) {
         StmtGraph<?> stmtGraph = allCFGInNativePackage.get(methodSignature);
         // 获取当前方法内关于stmt的数据流信息
-        List<Stmt> dataList = CFGUtil.getDataflowToList(stmtGraph, stmt);
+        List<Stmt> dataFlowList = CFGUtil.getDataflowToList(stmtGraph, stmt);
         // 获取当前方法内的敏感路径
         List<List<Stmt>> allPaths = CFGUtil.findAllPaths(stmtGraph);
         List<List<Stmt>> sensitivePaths = CFGUtil.pathFilter(allPaths, stmt);
         // 在敏感路径中筛选出数据流Stmt
-        List<Stmt> sensitive
+        List<Stmt> sensitiveStmtList = new ArrayList<>();
         sensitivePaths.forEach(path -> {
             path.forEach(nowStmt -> {
-                if (dataList.contains(nowStmt)) {
-
+                if (dataFlowList.contains(nowStmt)) {
+                    sensitiveStmtList.add(nowStmt);
                 }
             });
         });
-    }
+        // 对敏感Stmt进行筛选
+        // -属于调用->在这一步排除掉java.lang等本地包的影响
+        // 1. 属于约束中的调用
+        // 2. 属于本包内的调用，进行下一次递归分析
+        sensitiveStmtList.forEach(sensitiveStmt -> {
+            if (sensitiveStmt.isInvokableStmt()) {
+                InvokableStmt invoke = sensitiveStmt.asInvokableStmt();
+                invoke.getInvokeExpr().ifPresent(invokeExpr -> {
+                    MethodSignature methodSignature2 = invokeExpr.getMethodSignature();
+                    // 进行筛选
+                    // 1. 属于约束中的调用，直接返回
+//                    if () {
+//
+//                    }
+                    // 2. 属于本包内的调用，进行下一次分析，且敏感语句为这个调用的return语句
+                    if (allMethodSignatureInNativePackage.contains(methodSignature2)) {
+                        System.out.println(sensitiveStmt);
+                        System.out.println(methodSignature2);
+                        if (Objects.isNull(stmt)) {
+                            List<Stmt> returnStmtList = CFGUtil.getReturnStmtList(allCFGInNativePackage.get(methodSignature2));
+                        }
 
-
-    public void cutting(TreeNode<Stmt> tree) {
-        if (Objects.nonNull(tree.getFirstChild())) {
-            cutting(tree.getFirstChild());
-        }
-        if (Objects.nonNull(tree.getBrother())) {
-            cutting(tree.getBrother());
-        }
-        Stmt stmt = tree.getData();
-        try {
-            InvokableStmt invokableStmt = stmt.asInvokableStmt();
-            Optional<AbstractInvokeExpr> invokeExpr = invokableStmt.getInvokeExpr();
-            if (invokeExpr.isPresent()) {
-                MethodSignature nextMethodSignature = invokeExpr.get().getMethodSignature();
-                if (nextMethodSignature.getDeclClassType().toString().startsWith("java.lang")) {
-                    return;
-                }
-                // 除去java本地包内的方法
-                this.nextSensitiveMethodList.add(nextMethodSignature);
+                    }
+                });
             }
-        } catch (ClassCastException e){
-            System.out.println("stmt cannot be cast to InvokableStmt.class!!");
-        }
+        });
     }
 
 
@@ -171,8 +152,9 @@ public class Analysis03 {
                 }
                 StmtGraph<?> stmtGraph = method.getBody().getStmtGraph();
 
-                // 缓存所有方法的CFG信息
+                // 缓存方法信息
                 allCFGInNativePackage.put(method.getSignature(), stmtGraph);
+                allMethodSignatureInNativePackage.add(method.getSignature());
 
                 // CFG
                 String cfgDot = DotExporter.buildGraph(stmtGraph, false, null, null);
