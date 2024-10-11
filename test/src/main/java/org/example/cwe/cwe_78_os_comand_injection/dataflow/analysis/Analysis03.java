@@ -37,6 +37,7 @@ public class Analysis03 {
     public String targetPath;
     public Deque<MethodSignature> sensitiveMethodDeque = new ArrayDeque<>();
     public List<MethodSignature> nextSensitiveMethodList = new ArrayList<>();
+    public Map<MethodSignature, StmtGraph<?>> allCFGInNativePackage = new HashMap<>();
 
     Analysis03(String classesPath, String targetPath, List<MethodSignature> sensitiveMethodList) {
         this.classesPath = classesPath;
@@ -96,9 +97,29 @@ public class Analysis03 {
                     //  1. 不能是函数调用-->发现是函数调用，进行下一次数据流分析，敏感语句为return语句，循环分析知道
 
                     // TODO 找到完整的数据流向，判断数据是否通过了我们的约束，如HttpHeader等
+
+                    // TODO 写一个递归方法，方法的参数为MethodSignature,Stmt,在这之前先把本包内的所有方法的CFG存储下来，作为分析用
                 }
             }
         }
+    }
+
+    public void recursiveAnalysis(MethodSignature methodSignature, Stmt stmt) {
+        StmtGraph<?> stmtGraph = allCFGInNativePackage.get(methodSignature);
+        // 获取当前方法内关于stmt的数据流信息
+        List<Stmt> dataList = CFGUtil.getDataflowToList(stmtGraph, stmt);
+        // 获取当前方法内的敏感路径
+        List<List<Stmt>> allPaths = CFGUtil.findAllPaths(stmtGraph);
+        List<List<Stmt>> sensitivePaths = CFGUtil.pathFilter(allPaths, stmt);
+        // 在敏感路径中筛选出数据流Stmt
+        List<Stmt> sensitive
+        sensitivePaths.forEach(path -> {
+            path.forEach(nowStmt -> {
+                if (dataList.contains(nowStmt)) {
+
+                }
+            });
+        });
     }
 
 
@@ -149,6 +170,9 @@ public class Analysis03 {
                     continue;
                 }
                 StmtGraph<?> stmtGraph = method.getBody().getStmtGraph();
+
+                // 缓存所有方法的CFG信息
+                allCFGInNativePackage.put(method.getSignature(), stmtGraph);
 
                 // CFG
                 String cfgDot = DotExporter.buildGraph(stmtGraph, false, null, null);
