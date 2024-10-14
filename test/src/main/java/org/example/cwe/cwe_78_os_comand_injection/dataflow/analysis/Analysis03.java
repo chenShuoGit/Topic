@@ -1,10 +1,14 @@
 package org.example.cwe.cwe_78_os_comand_injection.dataflow.analysis;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.wala.util.io.FileUtil;
+import org.apache.commons.io.FileUtils;
+import org.example.juliet_java_2017_v1_3.CWEInfos;
+import org.example.model.DetectResult;
 import org.example.model.SensitiveStmtOfMethodSignature;
 import org.example.util.CFGUtil;
 import org.example.util.Graphviz;
-import sootup.analysis.intraprocedural.reachingdefs.ReachingDefs;
 import sootup.core.graph.BasicBlock;
 import sootup.core.graph.StmtGraph;
 import sootup.core.inputlocation.AnalysisInputLocation;
@@ -12,20 +16,16 @@ import sootup.core.jimple.common.expr.AbstractInvokeExpr;
 import sootup.core.jimple.common.stmt.InvokableStmt;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.signatures.MethodSignature;
-import sootup.core.signatures.PackageName;
-import sootup.core.types.VoidType;
 import sootup.core.util.DotExporter;
-import sootup.core.util.tree.BuildTreeHelper;
-import sootup.core.util.tree.TreeNode;
 import sootup.java.bytecode.frontend.inputlocation.JavaClassPathAnalysisInputLocation;
 import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
-import sootup.java.core.types.JavaClassType;
 import sootup.java.core.views.JavaView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @Author chenshuo
@@ -34,29 +34,43 @@ import java.util.stream.Stream;
  */
 public class Analysis03 {
 
+    // 待分析的包路径
     public String classesPath;
+    // 保存分析结果的路径
     public String targetPath;
-    public Deque<MethodSignature> sensitiveMethodDeque = new ArrayDeque<>();
-    public List<MethodSignature> allMethodSignatureInNativePackage = new ArrayList<>();
-    public Map<MethodSignature, StmtGraph<?>> allCFGInNativePackage = new HashMap<>();
+    // 存储敏感Stmt的列表
+    public List<MethodSignature> sensitiveStmtList = new ArrayList<>();
+    // 存储敏感数据流的列表
+    public List<MethodSignature> sensitiveDataFlowList = new ArrayList<>();
+    // 待分析包下的所有的方法
+    public List<MethodSignature> allMethodSignatureInCurrentPackage = new ArrayList<>();
+    public Map<MethodSignature, StmtGraph<?>> allCFGInCurrentPackage = new HashMap<>();
+    private DetectResult result = new DetectResult();
+    private File resultFile;
 
-    Analysis03(String classesPath, String targetPath, List<MethodSignature> sensitiveMethodList) {
+    private MethodSignature currentSensitive;
+
+    Analysis03(String classesPath, String targetPath, CWEInfos cweInfos) {
         this.classesPath = classesPath;
         this.targetPath = targetPath;
-        sensitiveMethodList.forEach(method -> {
-            this.sensitiveMethodDeque.push(method);
-        });
+        this.sensitiveStmtList.addAll(cweInfos.getSensitiveStmt());
+        this.sensitiveDataFlowList.addAll(cweInfos.getSensitiveDataFlow());
+        this.resultFile = FileUtils.getFile(targetPath + "\\result.json");
+        result.setClassPath(classesPath.replace("\\", "\\\\"));
+        result.setCWEId(cweInfos.getId());
+        result.setCWEName(cweInfos.getName());
+        result.setData(new HashMap<>());
     }
 
     public void doAnalysis() {
+        // 创建分析过程
         List<AnalysisInputLocation> inputLocations = new ArrayList<>();
         inputLocations.add(new JavaClassPathAnalysisInputLocation(classesPath));
         JavaView view = new JavaView(inputLocations);
-        while (!sensitiveMethodDeque.isEmpty()) {
-            MethodSignature targetMethodSignature = sensitiveMethodDeque.pop();
-        // 第一次类分析-目标MethodSignature所在的Stmt语句
+        for (MethodSignature ms : sensitiveStmtList) {
+            this.currentSensitive = ms;
             List<SensitiveStmtOfMethodSignature> stmtOfSensitiveMethodSignatureList =
-                    getStmtOfSensitiveMethodSignature(view, targetMethodSignature);
+                    getStmtOfSensitiveMethodSignature(view, ms);
             for (SensitiveStmtOfMethodSignature obj : stmtOfSensitiveMethodSignatureList) {
                 Stmt stmt = obj.getStmt();
                 MethodSignature methodSignature = obj.getMethodSignature();
@@ -65,67 +79,66 @@ public class Analysis03 {
                     JavaSootMethod sootMethod = method.get();
                     System.out.println("当前处理方法：" + sootMethod.getName());
                     recursiveAnalysis(methodSignature, stmt);
-                    // TODO 写一个方法，在数据流信息的各个Stmt中，区分出所有的类型，目前初步可以分为以下几类：
-                    //  1. 硬编码
-                    //  2. 函数调用(java本地包内)
-                    //  3. 函数调用(同一个类的另一个方法)
-                    //  4. 函数调用(其它类型)
-
-                    // TODO 写一个方法，获取anatherMethod这个方法的返回值的数据流信息
-
-                    // TODO 确定数据流终止的条件(在跨函数条件下)
-                    //  1. 不能是函数调用-->发现是函数调用，进行下一次数据流分析，敏感语句为return语句，循环分析知道
-
-                    // TODO 找到完整的数据流向，判断数据是否通过了我们的约束，如HttpHeader等
-
-                    // TODO 写一个递归方法，方法的参数为MethodSignature,Stmt,在这之前先把本包内的所有方法的CFG存储下来，作为分析用
                 }
             }
+        }
+        // 存储json文件
+        System.out.println(result.toString());
+        try {
+            System.out.println("DetectResult.toJson(result) = " + DetectResult.toJson(result));
+            FileUtil.writeFile(resultFile, DetectResult.toJson(result));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void recursiveAnalysis(MethodSignature methodSignature, Stmt stmt) {
-        StmtGraph<?> stmtGraph = allCFGInNativePackage.get(methodSignature);
+        StmtGraph<?> stmtGraph = allCFGInCurrentPackage.get(methodSignature);
         // 获取当前方法内关于stmt的数据流信息
         List<Stmt> dataFlowList = CFGUtil.getDataflowToList(stmtGraph, stmt);
         // 获取当前方法内的敏感路径
         List<List<Stmt>> allPaths = CFGUtil.findAllPaths(stmtGraph);
         List<List<Stmt>> sensitivePaths = CFGUtil.pathFilter(allPaths, stmt);
-        // 在敏感路径中筛选出数据流Stmt
         List<Stmt> sensitiveStmtList = new ArrayList<>();
-        sensitivePaths.forEach(path -> {
-            path.forEach(nowStmt -> {
+        for(List<Stmt> path : sensitivePaths) {
+            // 在敏感路径中筛选出数据流Stmt
+            sensitiveStmtList.clear();
+            for (Stmt nowStmt : path) {
                 if (dataFlowList.contains(nowStmt)) {
                     sensitiveStmtList.add(nowStmt);
                 }
-            });
-        });
-        // 对敏感Stmt进行筛选
-        // -属于调用->在这一步排除掉java.lang等本地包的影响
-        // 1. 属于约束中的调用
-        // 2. 属于本包内的调用，进行下一次递归分析
-        sensitiveStmtList.forEach(sensitiveStmt -> {
-            if (sensitiveStmt.isInvokableStmt()) {
-                InvokableStmt invoke = sensitiveStmt.asInvokableStmt();
-                invoke.getInvokeExpr().ifPresent(invokeExpr -> {
-                    MethodSignature methodSignature2 = invokeExpr.getMethodSignature();
-                    // 进行筛选
-                    // 1. 属于约束中的调用，直接返回
-//                    if () {
-//
-//                    }
-                    // 2. 属于本包内的调用，进行下一次分析，且敏感语句为这个调用的return语句
-                    if (allMethodSignatureInNativePackage.contains(methodSignature2)) {
-                        System.out.println(sensitiveStmt);
-                        System.out.println(methodSignature2);
-                        if (Objects.isNull(stmt)) {
-                            List<Stmt> returnStmtList = CFGUtil.getReturnStmtList(allCFGInNativePackage.get(methodSignature2));
-                        }
-
-                    }
-                });
             }
-        });
+            for (Stmt sensitiveStmt : sensitiveStmtList) {
+                if (sensitiveStmt.isInvokableStmt()) {
+                    InvokableStmt invoke = sensitiveStmt.asInvokableStmt();
+                    Optional<AbstractInvokeExpr> invokeExpr1 = invoke.getInvokeExpr();
+                    if (invokeExpr1.isPresent()) {
+                        AbstractInvokeExpr abstractInvokeExpr = invokeExpr1.get();
+                        MethodSignature methodSignature2 = abstractInvokeExpr.getMethodSignature();
+                        // 判断是否符合约束-最初的敏感语句+当前的数据信息-->是否符合
+                        if (sensitiveDataFlowList.contains(methodSignature2)) {
+                            // 存储结果
+                            if (!result.getData().containsKey(this.currentSensitive)) {
+                                result.getData().put(this.currentSensitive, new HashMap<>());
+                            }
+                            Map<MethodSignature, List<List<Stmt>>> methodSignatureListMap = result.getData().get(this.currentSensitive);
+                            if (!methodSignatureListMap.containsKey(methodSignature2)) {
+                                methodSignatureListMap.put(methodSignature2, new ArrayList<>());
+                            }
+                            methodSignatureListMap.get(methodSignature2).add(path);
+                            System.err.println("Injection Point In: " + sensitiveStmt);
+                            System.err.println("Injection Point Path: " + path);
+                        }
+                        if (allMethodSignatureInCurrentPackage.contains(methodSignature2)) {
+                            List<Stmt> returnStmtList = CFGUtil.getReturnStmtList(allCFGInCurrentPackage.get(methodSignature2));
+                            for (Stmt returnStmt : returnStmtList) {
+                                recursiveAnalysis(methodSignature2, returnStmt);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -140,12 +153,9 @@ public class Analysis03 {
         List<SensitiveStmtOfMethodSignature> resultList = new ArrayList<>();
         for (JavaSootClass item : classes) {
             String className = item.getName();
-//            System.out.println("--------------------# 开始类分析：" + className + " #--------------------");
-            // 进行方法分析
             Set<JavaSootMethod> methodSet = item.getMethods();
             for (JavaSootMethod method : methodSet) {
                 String methodName = method.getName();
-//                System.out.println("----------# 开始方法分析：" + methodName + " #----------");
                 if (method.isAbstract() || method.isNative()) {
                     System.out.println(methodName + " is abstract or native, without method body!");
                     continue;
@@ -153,17 +163,16 @@ public class Analysis03 {
                 StmtGraph<?> stmtGraph = method.getBody().getStmtGraph();
 
                 // 缓存方法信息
-                allCFGInNativePackage.put(method.getSignature(), stmtGraph);
-                allMethodSignatureInNativePackage.add(method.getSignature());
+                allCFGInCurrentPackage.put(method.getSignature(), stmtGraph);
+                allMethodSignatureInCurrentPackage.add(method.getSignature());
 
-                // CFG
+                // 生成并存储方法的所有CFG
                 String cfgDot = DotExporter.buildGraph(stmtGraph, false, null, null);
                 Graphviz.dotToPng(cfgDot, targetPath, className + "." + methodName.replace("<", "_").replace(">", "_"));
 
-                // 进行语句分析-数据流分析-针对execMethodSignature
+                // 分析方法内是否包含目标敏感语句
                 List<? extends BasicBlock<?>> blocksSorted = stmtGraph.getBlocksSorted();
                 for (int i = 0; i < blocksSorted.size(); ++i) {
-//                    System.out.println("-----# " + "block: " + (i+1) + " #-----");
                     List<Stmt> stmts = blocksSorted.get(i).getStmts();
                     for (Stmt stmt : stmts) {
                         if (stmt.isInvokableStmt()) {
@@ -179,9 +188,7 @@ public class Analysis03 {
                         }
                     }
                 }
-//                System.out.println("----------# 方法分析结束：" + methodName + " #----------");
             }
-//            System.out.println("--------------------# 类分析结束：" + className + " #--------------------\n");
         }
         return resultList;
     }
@@ -192,15 +199,8 @@ public class Analysis03 {
         String classesPath =
                 "C:\\Users\\yeyan\\Desktop\\topic\\漏洞分析\\2017-11-02-juliet-java-v1-3\\144554-v1.0.0\\target\\classes";
         String targetPath =
-                "D:\\Project\\Java\\Topic\\test\\src\\main\\resources\\cwe\\cwe_78_os_comand_injection\\dataflow\\Analysis03";
-        MethodSignature sensitiveMethod = new MethodSignature(
-                new JavaClassType("Runtime", new PackageName("java.lang")),
-                "exec",
-                Collections.singletonList(new JavaClassType("String", new PackageName("java.lang"))),
-                new JavaClassType("Process", new PackageName("java.lang"))
-        );
-
-        Analysis03 analysis01 = new Analysis03(classesPath, targetPath, Collections.singletonList(sensitiveMethod));
+                "D:\\Project\\Java\\Topic\\test\\src\\main\\resources\\cwe\\cwe_78_os_comand_injection\\144554\\Analysis03";
+        Analysis03 analysis01 = new Analysis03(classesPath, targetPath, CWEInfos.CWE_78);
         analysis01.doAnalysis();
 
     }

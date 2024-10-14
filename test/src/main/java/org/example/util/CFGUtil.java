@@ -3,6 +3,7 @@ package org.example.util;
 import sootup.analysis.intraprocedural.reachingdefs.ReachingDefs;
 import sootup.core.graph.BasicBlock;
 import sootup.core.graph.StmtGraph;
+import sootup.core.jimple.common.stmt.JReturnStmt;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.signatures.MethodSignature;
 import sootup.core.types.Type;
@@ -85,7 +86,6 @@ public class CFGUtil {
                 BuildTreeHelper<Stmt> node = null;
                 Stmt data = value.get(i);
                 List<Stmt> dataList = reachingDefsMap.get(data);
-                // 增加第一个孩子节点
                 if (Objects.isNull(treeNode.getFirstChild())) {
                     TreeNode<Stmt> firstChild = new TreeNode<>();
                     firstChild.setData(data);
@@ -138,12 +138,12 @@ public class CFGUtil {
         List<Stmt> returnStmtList = new ArrayList<>();
         stmtGraph.getBlocks().forEach(block -> {
             block.getStmts().forEach(stmt -> {
-                stmt.asInvokableStmt().getInvokeExpr().ifPresent(i -> {
-                    Type type = i.getType();
-                    System.out.println(type);
-                });
+                if (stmt instanceof JReturnStmt) {
+                    returnStmtList.add(stmt);
+                }
             });
         });
         return returnStmtList;
     }
+
 }
