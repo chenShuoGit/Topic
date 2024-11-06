@@ -1,13 +1,14 @@
-package org.example.util;
+package cs.ldfy.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
+@Slf4j
 public class Graphviz {
     public static void dotToPng(String dot, String path, String fileName) {
-//        System.out.println("-----# Graphviz start #-----");
         String dotDirPath = path + "\\dot";
         String pngDirPath = path + "\\png";
         File dotDir = new File(dotDirPath);
@@ -20,23 +21,21 @@ public class Graphviz {
         }
         String dotFilePath = path + "\\dot" + "\\" + fileName + ".dot";
         String pngFilePath = path + "\\png" + "\\" + fileName + ".png";
+        String command = "";
         try {
             File dotFile = new File(dotFilePath);
             if (dotFile.exists()) {
-//                System.out.println("dot file already exists!");
                 return;
             }
             // 存储dot文件
             FileUtils.writeByteArrayToFile(dotFile, dot.getBytes());
             // 执行命令行程序
-            String command = "dot -Tpng -o " + pngFilePath + " " + dotFilePath;
-            System.out.println("command: " + command);
+            command = "dot -Tpng -o " + pngFilePath + " " + dotFilePath;
             Runtime.getRuntime().exec(command);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-//            System.out.println("-----# Graphviz end #-----");
+            log.error("Error executing command: {}, error: {}", command, e.getMessage());
         }
+        log.info("create png/dot file for method: {}", fileName);
     }
 
     public static void main(String[] args) {

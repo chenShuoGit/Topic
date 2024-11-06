@@ -1,12 +1,10 @@
-package org.example.util;
+package cs.ldfy.util;
 
 import sootup.analysis.intraprocedural.reachingdefs.ReachingDefs;
 import sootup.core.graph.BasicBlock;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.JReturnStmt;
 import sootup.core.jimple.common.stmt.Stmt;
-import sootup.core.signatures.MethodSignature;
-import sootup.core.types.Type;
 import sootup.core.util.tree.BuildTreeHelper;
 import sootup.core.util.tree.TreeNode;
 
@@ -29,17 +27,22 @@ public class CFGUtil {
         List<List<Stmt>> allPaths = new ArrayList<>();
         List<Stmt> path = new ArrayList<>();
         path.addAll(root.getStmts());
-        findPath(allPaths, root, path);
+        ArrayList<Integer> hashcodeList = new ArrayList<>();
+        findPath(allPaths, root, path, hashcodeList);
         return allPaths;
     }
-    private static void findPath(List<List<Stmt>> allPaths, BasicBlock<?> root, List<Stmt> path) {
+    private static void findPath(List<List<Stmt>> allPaths, BasicBlock<?> root, List<Stmt> path, ArrayList<Integer> hashcodeList) {
         if (root.getSuccessors().isEmpty()) {
             allPaths.add(path);
         } else {
             root.getSuccessors().forEach(successor -> {
-                List<Stmt> newPath = new ArrayList<>(path);
-                newPath.addAll(successor.getStmts());
-                findPath(allPaths, successor, newPath);
+                // 除去循环路径
+                if (!hashcodeList.contains(successor.hashCode())) {
+                    hashcodeList.add(successor.hashCode());
+                    List<Stmt> newPath = new ArrayList<>(path);
+                    newPath.addAll(successor.getStmts());
+                    findPath(allPaths, successor, newPath, hashcodeList);
+                }
             });
         }
     }

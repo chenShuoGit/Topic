@@ -9,13 +9,14 @@
         <version>1.3.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>cs.ldfy</groupId>
     <artifactId>test</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <asm.version>9.0</asm.version>
     </properties>
 
     <dependencies>
@@ -72,6 +73,78 @@
             <groupId>org.soot-oss</groupId>
             <artifactId>sootup.qilin</artifactId>
         </dependency>
+
+        <!--ASM-->
+        <!-- define the event based API and provide the class parser and writer components. -->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+        <!--provides various tools based on the core API that can be used during
+        the development and debuging of ASM applications.-->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-util</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+        <!--provides several useful predefined class transformers, mostly based on the core API.-->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-commons</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+        <!--defines the object based API, and provides tools to convert between the
+        event based and the object based representations.-->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-tree</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+        <!-- provides a class analysis framework and several predefined class analyzers,
+        based on the tree API.-->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-analysis</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.8.0-beta4</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -33,7 +33,7 @@ final StmtGraph<?> stmtGraph = builder.getStmtGraph();
 ```
 
 ### How can I visualize a StmtGraph?
-There exists a tool, that converts a StmtGraph to the org.example.util.Graphviz Dot Language.
+There exists a tool, that converts a StmtGraph to the util.cs.ldfy.Graphviz Dot Language.
 ```java
 DotExporter.buildGraph( stmtgraph );
 ```
